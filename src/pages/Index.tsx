@@ -1,94 +1,72 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { 
-  Laptop, 
-  Settings, 
-  Zap, 
-  HardDrive, 
-  Users, 
-  Check, 
-  Phone,
-  Computer,
-  Shield,
-  Clock,
-  Award
-} from 'lucide-react';
+import { Laptop, Settings, Zap, HardDrive, Users, Check, Phone, Computer, Shield, Clock, Award } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-
 const Index = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     issue: ''
   });
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
       title: "Pesan Terkirim!",
-      description: "Kami akan menghubungi Anda dalam 24 jam.",
+      description: "Kami akan menghubungi Anda dalam 24 jam."
     });
-    setFormData({ name: '', email: '', issue: '' });
+    setFormData({
+      name: '',
+      email: '',
+      issue: ''
+    });
   };
-
-  const services = [
-    {
-      icon: <Laptop className="h-10 w-10 text-tech-blue" />,
-      title: "Install Ulang Windows & Linux",
-      description: "Reinstallasi OS laptop, PC, dan MacBook dengan sistem Windows, Linux, atau macOS. Proses cepat dan aman.",
-      features: ["Windows 10/11", "Ubuntu/Linux Mint", "macOS Support"]
-    },
-    {
-      icon: <Settings className="h-10 w-10 text-tech-cyan" />,
-      title: "Remote Troubleshooting",
-      description: "Bantuan remote untuk mengatasi masalah software dan konfigurasi sistem secara real-time.",
-      features: ["Akses Remote Aman", "Diagnosis Real-time", "Panduan Step-by-step"]
-    },
-    {
-      icon: <Computer className="h-10 w-10 text-tech-green" />,
-      title: "Setup Server Homelab",
-      description: "Konfigurasi personal cloud, NAS, dan self-hosted services untuk kebutuhan digital rumah modern.",
-      features: ["Personal Cloud", "Media Server", "Home Automation"]
-    },
-    {
-      icon: <HardDrive className="h-10 w-10 text-tech-purple" />,
-      title: "Upgrade Hardware",
-      description: "Peningkatan performa dengan upgrade RAM, SSD, dan komponen hardware terbaru.",
-      features: ["RAM & SSD Upgrade", "Peripheral Setup", "Performance Tuning"]
-    }
-  ];
-
-  const whyChooseUs = [
-    {
-      icon: <Zap className="h-8 w-8 text-tech-cyan" />,
-      title: "Respon Cepat",
-      description: "Layanan dalam 24 jam, emergency support tersedia untuk masalah urgent"
-    },
-    {
-      icon: <Award className="h-8 w-8 text-tech-green" />,
-      title: "Berpengalaman",
-      description: "Tim teknisi bersertifikat dengan pengalaman 5+ tahun di bidang IT"
-    },
-    {
-      icon: <Shield className="h-8 w-8 text-tech-purple" />,
-      title: "Bergaransi",
-      description: "Garansi layanan 30 hari untuk semua jenis perbaikan dan instalasi"
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-tech-slate-50">
+  const services = [{
+    icon: <Laptop className="h-10 w-10 text-tech-blue" />,
+    title: "Install Ulang Windows & Linux",
+    description: "Reinstallasi OS laptop, PC, dan MacBook dengan sistem Windows, Linux, atau macOS. Proses cepat dan aman.",
+    features: ["Windows 10/11", "Ubuntu/Linux Mint", "macOS Support"]
+  }, {
+    icon: <Settings className="h-10 w-10 text-tech-cyan" />,
+    title: "Remote Troubleshooting",
+    description: "Bantuan remote untuk mengatasi masalah software dan konfigurasi sistem secara real-time.",
+    features: ["Akses Remote Aman", "Diagnosis Real-time", "Panduan Step-by-step"]
+  }, {
+    icon: <Computer className="h-10 w-10 text-tech-green" />,
+    title: "Setup Server Homelab",
+    description: "Konfigurasi personal cloud, NAS, dan self-hosted services untuk kebutuhan digital rumah modern.",
+    features: ["Personal Cloud", "Media Server", "Home Automation"]
+  }, {
+    icon: <HardDrive className="h-10 w-10 text-tech-purple" />,
+    title: "Upgrade Hardware",
+    description: "Peningkatan performa dengan upgrade RAM, SSD, dan komponen hardware terbaru.",
+    features: ["RAM & SSD Upgrade", "Peripheral Setup", "Performance Tuning"]
+  }];
+  const whyChooseUs = [{
+    icon: <Zap className="h-8 w-8 text-tech-cyan" />,
+    title: "Respon Cepat",
+    description: "Layanan dalam 24 jam, emergency support tersedia untuk masalah urgent"
+  }, {
+    icon: <Award className="h-8 w-8 text-tech-green" />,
+    title: "Berpengalaman",
+    description: "Tim teknisi bersertifikat dengan pengalaman 5+ tahun di bidang IT"
+  }, {
+    icon: <Shield className="h-8 w-8 text-tech-purple" />,
+    title: "Bergaransi",
+    description: "Garansi layanan 30 hari untuk semua jenis perbaikan dan instalasi"
+  }];
+  return <div className="min-h-screen bg-tech-slate-50">
       {/* Header */}
       <header className="border-b border-tech-slate-200/60 bg-white/90 backdrop-blur-lg sticky top-0 z-50 tech-glow">
         <div className="container mx-auto px-4 py-4">
           <nav className="flex items-center justify-between">
-            <div className="text-2xl font-bold font-mono gradient-text">TechSupport Pro</div>
+            <div className="text-2xl font-bold font-mono gradient-text">InstallUlang</div>
             <div className="hidden md:flex space-x-8">
               <a href="#services" className="text-tech-slate-600 hover:text-tech-blue transition-colors font-medium">Layanan</a>
               <a href="#about" className="text-tech-slate-600 hover:text-tech-blue transition-colors font-medium">Tentang</a>
@@ -110,7 +88,7 @@ const Index = () => {
           <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
           <div className="container mx-auto max-w-5xl relative">
             <div className="animate-fade-in">
-              <Badge variant="outline" className="mb-8 border-tech-blue/30 text-tech-blue bg-white/80 backdrop-blur-sm px-4 py-2 text-sm font-medium">
+              <Badge variant="outline" className="mb-8 border-tech-blue/30 text-tech-blue bg-white/80 backdrop-blur-sm text-sm font-medium py-[13px] px-[34px] my-0 mx-0">
                 Profesional & Terpercaya
               </Badge>
               <h1 className="text-4xl md:text-7xl font-bold mb-8 leading-tight text-tech-slate-900">
@@ -121,20 +99,15 @@ const Index = () => {
                 Layanan profesional untuk semua kebutuhan teknologi Anda. Dari install ulang OS hingga setup server homelab, kami siap membantu dengan respon cepat dan bergaransi.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Button 
-                  size="lg" 
-                  className="tech-button-primary text-lg px-10 py-6 rounded-xl tech-glow-strong font-semibold"
-                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                >
+                <Button size="lg" className="tech-button-primary text-lg px-10 py-6 rounded-xl tech-glow-strong font-semibold" onClick={() => document.getElementById('contact')?.scrollIntoView({
+                behavior: 'smooth'
+              })}>
                   <Clock className="h-5 w-5 mr-2" />
                   Konsultasi Gratis
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="tech-button-secondary text-lg px-10 py-6 rounded-xl"
-                  onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-                >
+                <Button variant="outline" size="lg" onClick={() => document.getElementById('services')?.scrollIntoView({
+                behavior: 'smooth'
+              })} className="tech-button-secondary text-lg px-10 py-6 rounded-xl font-bold bg-[tech-blue-dark] bg-yellow-400 hover:bg-yellow-300 text-blue-500">
                   Lihat Layanan
                 </Button>
               </div>
@@ -153,8 +126,7 @@ const Index = () => {
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {services.map((service, index) => (
-                <Card key={index} className={`tech-card group animate-fade-in-up animate-delay-${index * 200}`}>
+              {services.map((service, index) => <Card key={index} className={`tech-card group animate-fade-in-up animate-delay-${index * 200}`}>
                   <CardContent className="p-0">
                     <div className="mb-6 group-hover:scale-110 transition-transform duration-300 p-4 rounded-2xl bg-gradient-to-br from-tech-slate-50 to-white">
                       {service.icon}
@@ -162,16 +134,13 @@ const Index = () => {
                     <h3 className="text-xl font-bold mb-4 text-tech-slate-900">{service.title}</h3>
                     <p className="text-tech-slate-600 mb-6 leading-relaxed">{service.description}</p>
                     <ul className="space-y-3">
-                      {service.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center text-sm text-tech-slate-500">
+                      {service.features.map((feature, idx) => <li key={idx} className="flex items-center text-sm text-tech-slate-500">
                           <Check className="h-4 w-4 text-tech-green mr-3 flex-shrink-0" />
                           <span className="font-medium">{feature}</span>
-                        </li>
-                      ))}
+                        </li>)}
                     </ul>
                   </CardContent>
-                </Card>
-              ))}
+                </Card>)}
             </div>
           </div>
         </section>
@@ -185,15 +154,13 @@ const Index = () => {
             </div>
             
             <div className="grid md:grid-cols-3 gap-10">
-              {whyChooseUs.map((item, index) => (
-                <div key={index} className={`text-center animate-slide-in-left animate-delay-${index * 200}`}>
+              {whyChooseUs.map((item, index) => <div key={index} className={`text-center animate-slide-in-left animate-delay-${index * 200}`}>
                   <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl shadow-lg mb-8 tech-glow">
                     {item.icon}
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-tech-slate-900">{item.title}</h3>
                   <p className="text-tech-slate-600 leading-relaxed font-medium">{item.description}</p>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </section>
@@ -216,17 +183,10 @@ const Index = () => {
                     <h3 className="text-3xl font-bold text-tech-slate-900">Remote Support</h3>
                   </div>
                   <ul className="space-y-4 mb-8">
-                    {[
-                      "Bantuan instan dalam menit",
-                      "Biaya lebih ekonomis",
-                      "Cocok untuk troubleshooting software",
-                      "Aman dengan enkripsi end-to-end"
-                    ].map((item, idx) => (
-                      <li key={idx} className="flex items-center">
+                    {["Bantuan instan dalam menit", "Biaya lebih ekonomis", "Cocok untuk troubleshooting software", "Aman dengan enkripsi end-to-end"].map((item, idx) => <li key={idx} className="flex items-center">
                         <Check className="h-5 w-5 text-tech-green mr-4 flex-shrink-0" />
                         <span className="font-medium text-tech-slate-700">{item}</span>
-                      </li>
-                    ))}
+                      </li>)}
                   </ul>
                   <Button className="tech-button-secondary w-full py-4 text-lg font-semibold">
                     Mulai Remote Session
@@ -243,17 +203,10 @@ const Index = () => {
                     <h3 className="text-3xl font-bold text-tech-slate-900">On-Site Support</h3>
                   </div>
                   <ul className="space-y-4 mb-8">
-                    {[
-                      "Penanganan hardware langsung",
-                      "Install ulang OS & software",
-                      "Upgrade komponen hardware",
-                      "Setup server & network"
-                    ].map((item, idx) => (
-                      <li key={idx} className="flex items-center">
+                    {["Penanganan hardware langsung", "Install ulang OS & software", "Upgrade komponen hardware", "Setup server & network"].map((item, idx) => <li key={idx} className="flex items-center">
                         <Check className="h-5 w-5 text-tech-green mr-4 flex-shrink-0" />
                         <span className="font-medium text-tech-slate-700">{item}</span>
-                      </li>
-                    ))}
+                      </li>)}
                   </ul>
                   <Button className="tech-button-primary w-full py-4 text-lg font-semibold">
                     Buat Jadwal Kunjungan
@@ -276,15 +229,16 @@ const Index = () => {
               <div className="animate-slide-in-left">
                 <h3 className="text-2xl font-bold mb-8 text-tech-slate-900">Informasi Kontak</h3>
                 <div className="space-y-6">
-                  {[
-                    { icon: <Phone className="h-6 w-6 text-tech-blue" />, text: "+62 812-3456-7890" },
-                    { icon: <Computer className="h-6 w-6 text-tech-cyan" />, text: "support@techsupportpro.id" }
-                  ].map((item, idx) => (
-                    <div key={idx} className="flex items-center p-4 bg-white/80 rounded-xl backdrop-blur-sm">
+                  {[{
+                  icon: <Phone className="h-6 w-6 text-tech-blue" />,
+                  text: "+62 812-3456-7890"
+                }, {
+                  icon: <Computer className="h-6 w-6 text-tech-cyan" />,
+                  text: "support@techsupportpro.id"
+                }].map((item, idx) => <div key={idx} className="flex items-center p-4 bg-white/80 rounded-xl backdrop-blur-sm">
                       {item.icon}
                       <span className="ml-4 font-medium text-tech-slate-700">{item.text}</span>
-                    </div>
-                  ))}
+                    </div>)}
                   
                   <div className="flex items-start p-4 bg-white/80 rounded-xl backdrop-blur-sm">
                     <Settings className="h-6 w-6 text-tech-green mt-1" />
@@ -310,33 +264,22 @@ const Index = () => {
                   <h3 className="text-2xl font-bold mb-8 text-tech-slate-900">Kirim Pesan</h3>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                      <Input
-                        placeholder="Nama Lengkap"
-                        value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})}
-                        required
-                        className="border-tech-slate-200 focus:border-tech-blue bg-white/80 backdrop-blur-sm py-4 text-lg rounded-xl"
-                      />
+                      <Input placeholder="Nama Lengkap" value={formData.name} onChange={e => setFormData({
+                      ...formData,
+                      name: e.target.value
+                    })} required className="border-tech-slate-200 focus:border-tech-blue bg-white/80 backdrop-blur-sm py-4 text-lg rounded-xl" />
                     </div>
                     <div>
-                      <Input
-                        type="email"
-                        placeholder="Email"
-                        value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        required
-                        className="border-tech-slate-200 focus:border-tech-blue bg-white/80 backdrop-blur-sm py-4 text-lg rounded-xl"
-                      />
+                      <Input type="email" placeholder="Email" value={formData.email} onChange={e => setFormData({
+                      ...formData,
+                      email: e.target.value
+                    })} required className="border-tech-slate-200 focus:border-tech-blue bg-white/80 backdrop-blur-sm py-4 text-lg rounded-xl" />
                     </div>
                     <div>
-                      <Textarea
-                        placeholder="Jelaskan masalah atau kebutuhan Anda..."
-                        value={formData.issue}
-                        onChange={(e) => setFormData({...formData, issue: e.target.value})}
-                        required
-                        rows={5}
-                        className="border-tech-slate-200 focus:border-tech-blue bg-white/80 backdrop-blur-sm text-lg rounded-xl"
-                      />
+                      <Textarea placeholder="Jelaskan masalah atau kebutuhan Anda..." value={formData.issue} onChange={e => setFormData({
+                      ...formData,
+                      issue: e.target.value
+                    })} required rows={5} className="border-tech-slate-200 focus:border-tech-blue bg-white/80 backdrop-blur-sm text-lg rounded-xl" />
                     </div>
                     <Button type="submit" className="tech-button-primary w-full py-4 text-lg font-semibold rounded-xl">
                       Kirim Pesan
@@ -354,7 +297,7 @@ const Index = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-4 gap-10">
             <div>
-              <h3 className="text-2xl font-bold mb-6 font-mono gradient-text">TechSupport Pro</h3>
+              <h3 className="text-2xl font-bold mb-6 font-mono gradient-text">InstallUlang</h3>
               <p className="text-tech-slate-400 leading-relaxed font-medium">
                 Solusi profesional untuk semua kebutuhan teknologi Anda. Melayani area Jakarta dan sekitarnya.
               </p>
@@ -362,11 +305,9 @@ const Index = () => {
             <div>
               <h4 className="font-bold mb-6 text-lg">Layanan</h4>
               <ul className="space-y-3 text-tech-slate-400">
-                {["Install Ulang OS", "Remote Support", "Hardware Upgrade", "Server Setup"].map((item) => (
-                  <li key={item}>
+                {["Install Ulang OS", "Remote Support", "Hardware Upgrade", "Server Setup"].map(item => <li key={item}>
                     <a href="#" className="hover:text-tech-cyan transition-colors font-medium">{item}</a>
-                  </li>
-                ))}
+                  </li>)}
               </ul>
             </div>
             <div>
@@ -379,24 +320,17 @@ const Index = () => {
             </div>
             <div>
               <h4 className="font-bold mb-6 text-lg">WhatsApp</h4>
-              <a 
-                href="https://wa.me/6281234567890" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center bg-gradient-to-r from-tech-green to-tech-cyan text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
-              >
+              <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" className="inline-flex items-center bg-gradient-to-r from-tech-green to-tech-cyan text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
                 <Phone className="h-5 w-5 mr-2" />
                 Chat Sekarang
               </a>
             </div>
           </div>
           <div className="border-t border-tech-slate-800 mt-12 pt-8 text-center text-tech-slate-400">
-            <p className="font-medium">&copy; 2024 TechSupport Pro. All rights reserved.</p>
+            <p className="font-medium">© 2025 InstallUlang. All rights reserved.</p>
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
