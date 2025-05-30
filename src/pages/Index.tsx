@@ -88,9 +88,7 @@ const Index = () => {
           <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
           <div className="container mx-auto max-w-5xl relative">
             <div className="animate-fade-in">
-              <Badge variant="outline" className="mb-8 border-tech-blue/30 text-tech-blue bg-white/80 backdrop-blur-sm text-sm font-medium py-[13px] px-[34px] my-0 mx-0">
-                Profesional & Terpercaya
-              </Badge>
+              
               <h1 className="text-4xl md:text-7xl font-bold mb-8 leading-tight text-tech-slate-900">
                 Jasa Install Ulang Laptop & Komputer,{' '}
                 <span className="gradient-text">Troubleshoot & Cloud Server</span>
