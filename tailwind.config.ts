@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,15 +62,23 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
+				// Modern Tech Color Palette
 				tech: {
-					blue: '#3B82F6',
-					'blue-light': '#60A5FA',
-					'blue-dark': '#1E40AF',
+					// Primary Blues (Most popular for tech)
+					navy: '#0F172A',
+					'dark-blue': '#1E293B',
+					'blue-gray': '#334155',
+					blue: '#0EA5E9',
+					'light-blue': '#38BDF8',
+					
+					// Accent Colors
 					cyan: '#06B6D4',
-					'cyan-light': '#22D3EE',
-					green: '#10B981',
-					'green-light': '#34D399',
-					purple: '#8B5CF6',
+					teal: '#14B8A6',
+					emerald: '#10B981',
+					violet: '#8B5CF6',
+					purple: '#A855F7',
+					
+					// Neutral Tech Colors
 					slate: {
 						50: '#F8FAFC',
 						100: '#F1F5F9',
@@ -82,7 +89,16 @@ export default {
 						600: '#475569',
 						700: '#334155',
 						800: '#1E293B',
-						900: '#0F172A'
+						900: '#0F172A',
+						950: '#020617'
+					},
+					
+					// Vibrant Accents
+					neon: {
+						cyan: '#00F5FF',
+						green: '#00FF88',
+						purple: '#BD5EFF',
+						pink: '#FF6B9D'
 					}
 				}
 			},
@@ -152,10 +168,10 @@ export default {
 				},
 				'pulse-glow': {
 					'0%, 100%': {
-						boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)'
+						boxShadow: '0 0 20px rgba(14, 165, 233, 0.4)'
 					},
 					'50%': {
-						boxShadow: '0 0 30px rgba(59, 130, 246, 0.5)'
+						boxShadow: '0 0 40px rgba(14, 165, 233, 0.6)'
 					}
 				},
 				'gradient-shift': {
@@ -164,6 +180,14 @@ export default {
 					},
 					'50%': {
 						backgroundPosition: '100% 50%'
+					}
+				},
+				'circuit-flow': {
+					'0%': {
+						backgroundPosition: '0% 0%'
+					},
+					'100%': {
+						backgroundPosition: '100% 100%'
 					}
 				}
 			},
@@ -175,11 +199,14 @@ export default {
 				'slide-in-left': 'slide-in-left 0.6s ease-out',
 				'float': 'float 3s ease-in-out infinite',
 				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-				'gradient-shift': 'gradient-shift 3s ease-in-out infinite'
+				'gradient-shift': 'gradient-shift 3s ease-in-out infinite',
+				'circuit-flow': 'circuit-flow 8s linear infinite'
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-				'tech-gradient': 'linear-gradient(135deg, #3B82F6 0%, #06B6D4 50%, #10B981 100%)',
+				'tech-gradient': 'linear-gradient(135deg, #0EA5E9 0%, #06B6D4 50%, #14B8A6 100%)',
+				'dark-gradient': 'linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%)',
+				'circuit-pattern': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230EA5E9' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3Cpath d='M30 0v60M0 30h60'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
 			}
 		}
 	},
