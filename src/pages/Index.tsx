@@ -54,7 +54,7 @@ const Index = () => {
 
   const whyChooseUs = [
     {
-      icon: <Zap className="h-8 w-8 text-mint-DEFAULT" />,
+      icon: <Zap className="h-8 w-8 text-mint" />,
       title: "Respon Cepat",
       description: "Layanan dalam 24 jam, emergency support tersedia untuk masalah urgent"
     },
@@ -129,9 +129,9 @@ const Index = () => {
             
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {services.map((service, index) => (
-                <Card key={index} className={`sage-card group animate-fade-in-up animate-delay-${index * 200}`}>
+                <Card key={index} className={`bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all duration-500 animate-fade-in-up animate-delay-${index * 200}`}>
                   <CardContent className="p-0">
-                    <div className="mb-6 group-hover:scale-110 transition-transform duration-300 p-4 rounded-2xl bg-gradient-to-br from-sage-50 to-white shadow-inner">
+                    <div className="mb-6 group-hover:scale-110 transition-transform duration-300 p-4 rounded-2xl bg-gradient-to-br from-sage-50/20 to-white/10 shadow-inner">
                       {service.icon}
                     </div>
                     <h3 className="text-xl font-bold mb-4 text-sage-800">{service.title}</h3>
@@ -186,7 +186,7 @@ const Index = () => {
               <Card className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all duration-500 animate-fade-in-up">
                 <CardContent className="p-0">
                   <div className="flex items-center mb-8">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-mint-DEFAULT to-mint-dark text-white mr-4 shadow-lg">
+                    <div className="p-3 rounded-xl bg-gradient-to-br from-mint to-mint-dark text-white mr-4 shadow-lg">
                       <Zap className="h-8 w-8" />
                     </div>
                     <h3 className="text-3xl font-bold text-white">Remote Support</h3>
@@ -199,7 +199,7 @@ const Index = () => {
                       </li>
                     ))}
                   </ul>
-                  <Button className="bg-gradient-to-r from-mint-DEFAULT to-mint-dark hover:from-mint-dark hover:to-forest-light text-white w-full py-4 text-lg font-semibold rounded-xl shadow-lg">
+                  <Button className="bg-gradient-to-r from-mint to-mint-dark hover:from-mint-dark hover:to-forest-light text-white w-full py-4 text-lg font-semibold rounded-xl shadow-lg">
                     Mulai Remote Session
                   </Button>
                 </CardContent>
@@ -244,7 +244,7 @@ const Index = () => {
                 <div className="space-y-6">
                   {[
                     { icon: <Phone className="h-6 w-6 text-sage-600" />, text: "+62 812-3456-7890" },
-                    { icon: <Computer className="h-6 w-6 text-mint-DEFAULT" />, text: "support@techsupportpro.id" }
+                    { icon: <Computer className="h-6 w-6 text-mint" />, text: "support@techsupportpro.id" }
                   ].map((item, idx) => (
                     <div key={idx} className="flex items-center p-4 bg-white/90 backdrop-blur-sm rounded-xl shadow-md border border-sage-200/50">
                       {item.icon}
@@ -271,7 +271,7 @@ const Index = () => {
                 </div>
               </div>
               
-              <Card className="sage-card animate-fade-in-up animate-delay-200">
+              <Card className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all duration-500 animate-fade-in-up animate-delay-200">
                 <CardContent className="p-0">
                   <h3 className="text-2xl font-bold mb-8 text-sage-800">Kirim Pesan</h3>
                   <form onSubmit={handleSubmit} className="space-y-6">
@@ -281,7 +281,7 @@ const Index = () => {
                         value={formData.name} 
                         onChange={e => setFormData({ ...formData, name: e.target.value })} 
                         required 
-                        className="border-sage-300 focus:border-sage-500 bg-white/90 backdrop-blur-sm py-4 text-lg rounded-xl shadow-sm" 
+                        className="border-sage-300/50 focus:border-sage-500 bg-white/90 backdrop-blur-sm py-4 text-lg rounded-xl shadow-sm" 
                       />
                     </div>
                     <div>
@@ -291,7 +291,7 @@ const Index = () => {
                         value={formData.email} 
                         onChange={e => setFormData({ ...formData, email: e.target.value })} 
                         required 
-                        className="border-sage-300 focus:border-sage-500 bg-white/90 backdrop-blur-sm py-4 text-lg rounded-xl shadow-sm" 
+                        className="border-sage-300/50 focus:border-sage-500 bg-white/90 backdrop-blur-sm py-4 text-lg rounded-xl shadow-sm" 
                       />
                     </div>
                     <div>
@@ -301,10 +301,10 @@ const Index = () => {
                         onChange={e => setFormData({ ...formData, issue: e.target.value })} 
                         required 
                         rows={5} 
-                        className="border-sage-300 focus:border-sage-500 bg-white/90 backdrop-blur-sm text-lg rounded-xl shadow-sm" 
+                        className="border-sage-300/50 focus:border-sage-500 bg-white/90 backdrop-blur-sm text-lg rounded-xl shadow-sm" 
                       />
                     </div>
-                    <Button type="submit" className="sage-button-primary w-full py-4 text-lg font-semibold rounded-xl">
+                    <Button type="submit" className="bg-gradient-to-r from-sage-600 to-sage-500 text-white w-full py-4 text-lg font-semibold rounded-xl shadow-lg hover:from-sage-700 hover:to-sage-600 transition-all duration-300">
                       Kirim Pesan
                     </Button>
                   </form>
@@ -346,7 +346,7 @@ const Index = () => {
             </div>
             <div>
               <h4 className="font-bold mb-6 text-lg">WhatsApp</h4>
-              <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" className="inline-flex items-center bg-gradient-to-r from-mint-DEFAULT to-mint-dark text-white px-6 py-3 rounded-xl font-semibold hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" className="inline-flex items-center bg-gradient-to-r from-mint to-mint-dark text-white px-6 py-3 rounded-xl font-semibold hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <Phone className="h-5 w-5 mr-2" />
                 Chat Sekarang
               </a>
