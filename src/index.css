@@ -62,7 +62,7 @@
 
 @layer components {
   .gradient-text {
-    @apply bg-gradient-to-r from-sage-600 via-sage-500 to-mint-DEFAULT bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-sage-600 via-sage-500 to-mint bg-clip-text text-transparent;
     background-size: 200% 200%;
     animation: gradient-shift 3s ease-in-out infinite;
   }
@@ -178,6 +178,6 @@
   }
 
   .text-sage-gradient {
-    @apply bg-gradient-to-r from-sage-600 via-sage-500 to-mint-DEFAULT bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-sage-600 via-sage-500 to-mint bg-clip-text text-transparent;
   }
 }
