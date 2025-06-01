@@ -34,8 +34,9 @@ const Index = () => {
       if (error) throw error;
 
       toast({
-        title: "Pesan Terkirim!",
-        description: "Kami akan menghubungi Anda dalam 24 jam."
+        title: "Pesan Berhasil Dikirim!",
+        description: "Pesan Anda telah diterima dan akan dibalas oleh admin dalam waktu dekat. Untuk respon cepat, hubungi WhatsApp di +62 878-5911-4643",
+        duration: 6000
       });
       
       setFormData({
@@ -46,9 +47,10 @@ const Index = () => {
     } catch (error) {
       console.error('Error sending email:', error);
       toast({
-        title: "Pesan Terkirim!",
-        description: "Kami akan menghubungi Anda dalam 24 jam.",
-        variant: "default"
+        title: "Pesan Berhasil Dikirim!",
+        description: "Pesan Anda telah diterima dan akan dibalas oleh admin dalam waktu dekat. Untuk respon cepat, hubungi WhatsApp di +62 878-5911-4643",
+        variant: "default",
+        duration: 6000
       });
       
       setFormData({
@@ -97,12 +99,17 @@ const Index = () => {
     {
       icon: <Award className="h-8 w-8 text-sage-600" />,
       title: "Berpengalaman",
-      description: "Tim teknisi bersertifikat dengan pengalaman 5+ tahun di bidang IT"
+      description: "Tim teknisi berpengalaman 7+ tahun di bidang IT"
     },
     {
       icon: <Shield className="h-8 w-8 text-forest-DEFAULT" />,
       title: "Bergaransi",
-      description: "Garansi layanan 30 hari untuk semua jenis perbaikan dan instalasi"
+      description: (
+        <div>
+          Garansi layanan 30 hari untuk semua jenis perbaikan dan instalasi
+          <div className="text-xs mt-1 opacity-75">*syarat dan ketentuan berlaku</div>
+        </div>
+      )
     }
   ];
 
@@ -118,7 +125,7 @@ const Index = () => {
               <a href="#about" className="text-sage-600 hover:text-sage-700 transition-colors font-medium">Tentang</a>
               <a href="#contact" className="text-sage-600 hover:text-sage-700 transition-colors font-medium">Kontak</a>
             </div>
-            <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/6287859114643" target="_blank" rel="noopener noreferrer">
               <Button className="sage-button-primary rounded-xl px-6 py-2">
                 <Phone className="h-4 w-4 mr-2" />
                 WhatsApp
@@ -155,6 +162,7 @@ const Index = () => {
 
         {/* Services Section */}
         <section id="services" className="py-24 px-4 nature-bg">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1920&h=1080&fit=crop&auto=format&q=80')] opacity-5 bg-cover bg-center"></div>
           <div className="container mx-auto max-w-7xl relative">
             <div className="text-center mb-20 animate-fade-in-up">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-sage-800">Layanan Profesional Kami</h2>
@@ -189,6 +197,7 @@ const Index = () => {
 
         {/* Why Choose Us */}
         <section id="about" className="py-24 px-4 section-bg">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=1920&h=1080&fit=crop&auto=format&q=80')] opacity-5 bg-cover bg-center"></div>
           <div className="container mx-auto max-w-6xl relative">
             <div className="text-center mb-20 animate-fade-in-up">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-sage-800">Mengapa Pilih Kami?</h2>
@@ -202,7 +211,7 @@ const Index = () => {
                     {item.icon}
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-sage-800">{item.title}</h3>
-                  <p className="text-sage-600 leading-relaxed font-medium">{item.description}</p>
+                  <div className="text-sage-600 leading-relaxed font-medium">{item.description}</div>
                 </div>
               ))}
             </div>
@@ -211,7 +220,7 @@ const Index = () => {
 
         {/* Comparison Section */}
         <section className="py-24 px-4 bg-gradient-to-br from-sage-800 via-sage-700 to-sage-600 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&h=1080&fit=crop&auto=format&q=80')] opacity-10 bg-cover bg-center"></div>
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1920&h=1080&fit=crop&auto=format&q=80')] opacity-10 bg-cover bg-center"></div>
           <div className="container mx-auto max-w-5xl relative">
             <div className="text-center mb-20 animate-fade-in-up">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Remote vs On-Site Support</h2>
@@ -259,7 +268,7 @@ const Index = () => {
                       </li>
                     ))}
                   </ul>
-                  <a href="https://wa.me/6281234567890?text=Halo,%20saya%20ingin%20membuat%20jadwal%20kunjungan%20on-site%20support" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/6287859114643?text=Halo,%20saya%20ingin%20membuat%20jadwal%20kunjungan%20on-site%20support" target="_blank" rel="noopener noreferrer">
                     <Button className="bg-gradient-to-r from-forest-DEFAULT to-forest-dark hover:from-forest-dark hover:to-mint-dark text-white w-full py-4 text-lg font-semibold rounded-xl shadow-lg">
                       Buat Jadwal Kunjungan
                     </Button>
@@ -272,6 +281,7 @@ const Index = () => {
 
         {/* Contact Section */}
         <section id="contact" className="py-24 px-4 section-bg">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=1920&h=1080&fit=crop&auto=format&q=80')] opacity-5 bg-cover bg-center"></div>
           <div className="container mx-auto max-w-5xl relative">
             <div className="text-center mb-20 animate-fade-in-up">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-sage-800">Hubungi Kami</h2>
@@ -285,7 +295,7 @@ const Index = () => {
                   {[
                     {
                       icon: <Phone className="h-6 w-6 text-sage-600" />,
-                      text: "+62 812-3456-7890"
+                      text: "+62 878-5911-4643"
                     },
                     {
                       icon: <Computer className="h-6 w-6 text-mint" />,
@@ -365,7 +375,7 @@ const Index = () => {
 
       {/* Footer */}
       <footer className="bg-sage-800 text-white py-16 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&h=1080&fit=crop&auto=format&q=80')] opacity-5 bg-cover bg-center"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&h=1080&fit=crop&auto=format&q=80')] opacity-5 bg-cover bg-center"></div>
         <div className="container mx-auto max-w-6xl relative">
           <div className="grid md:grid-cols-4 gap-10">
             <div>
@@ -387,14 +397,14 @@ const Index = () => {
             <div>
               <h4 className="font-bold mb-6 text-lg">Kontak</h4>
               <ul className="space-y-3 text-sage-200 font-medium">
-                <li>+62 812-3456-7890</li>
+                <li>+62 878-5911-4643</li>
                 <li>support@installulang.web.id</li>
                 <li>Jakarta, Indonesia</li>
               </ul>
             </div>
             <div>
               <h4 className="font-bold mb-6 text-lg">WhatsApp</h4>
-              <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" className="inline-flex items-center bg-gradient-to-r from-mint to-mint-dark text-white px-6 py-3 rounded-xl font-semibold hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <a href="https://wa.me/6287859114643" target="_blank" rel="noopener noreferrer" className="inline-flex items-center bg-gradient-to-r from-mint to-mint-dark text-white px-6 py-3 rounded-xl font-semibold hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <Phone className="h-5 w-5 mr-2" />
                 Chat Sekarang
               </a>
