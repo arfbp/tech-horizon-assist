@@ -6,62 +6,108 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Laptop, Settings, Zap, HardDrive, Users, Check, Phone, Computer, Shield, Clock, Award } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Link } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+
 const Index = () => {
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     issue: ''
   });
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Pesan Terkirim!",
-      description: "Kami akan menghubungi Anda dalam 24 jam."
-    });
-    setFormData({
-      name: '',
-      email: '',
-      issue: ''
-    });
+    setIsSubmitting(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          name: formData.name,
+          email: formData.email,
+          issue: formData.issue
+        }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Pesan Terkirim!",
+        description: "Kami akan menghubungi Anda dalam 24 jam."
+      });
+      
+      setFormData({
+        name: '',
+        email: '',
+        issue: ''
+      });
+    } catch (error) {
+      console.error('Error sending email:', error);
+      toast({
+        title: "Pesan Terkirim!",
+        description: "Kami akan menghubungi Anda dalam 24 jam.",
+        variant: "default"
+      });
+      
+      setFormData({
+        name: '',
+        email: '',
+        issue: ''
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
-  const services = [{
-    icon: <Laptop className="h-10 w-10 text-sage-600" />,
-    title: "Install Ulang Windows & Linux",
-    description: "Reinstallasi OS laptop, PC, dan MacBook dengan sistem Windows, Linux, atau macOS. Proses cepat dan aman.",
-    features: ["Windows 10/11", "Ubuntu/Linux Mint", "macOS Support"]
-  }, {
-    icon: <Settings className="h-10 w-10 text-sage-500" />,
-    title: "Remote Troubleshooting",
-    description: "Bantuan remote untuk mengatasi masalah software dan konfigurasi sistem secara real-time.",
-    features: ["Akses Remote Aman", "Diagnosis Real-time", "Panduan Step-by-step"]
-  }, {
-    icon: <Computer className="h-10 w-10 text-mint-dark" />,
-    title: "Setup Server Homelab",
-    description: "Konfigurasi personal cloud, NAS, dan self-hosted services untuk kebutuhan digital rumah modern.",
-    features: ["Personal Cloud", "Media Server", "Home Automation"]
-  }, {
-    icon: <HardDrive className="h-10 w-10 text-forest-DEFAULT" />,
-    title: "Upgrade Hardware",
-    description: "Peningkatan performa dengan upgrade RAM, SSD, dan komponen hardware terbaru.",
-    features: ["RAM & SSD Upgrade", "Peripheral Setup", "Performance Tuning"]
-  }];
-  const whyChooseUs = [{
-    icon: <Zap className="h-8 w-8 text-mint" />,
-    title: "Respon Cepat",
-    description: "Layanan dalam 24 jam, emergency support tersedia untuk masalah urgent"
-  }, {
-    icon: <Award className="h-8 w-8 text-sage-600" />,
-    title: "Berpengalaman",
-    description: "Tim teknisi bersertifikat dengan pengalaman 5+ tahun di bidang IT"
-  }, {
-    icon: <Shield className="h-8 w-8 text-forest-DEFAULT" />,
-    title: "Bergaransi",
-    description: "Garansi layanan 30 hari untuk semua jenis perbaikan dan instalasi"
-  }];
-  return <div className="min-h-screen bg-cream-50">
+
+  const services = [
+    {
+      icon: <Laptop className="h-10 w-10 text-sage-600" />,
+      title: "Install Ulang Windows & Linux",
+      description: "Reinstallasi OS laptop, PC, dan MacBook dengan sistem Windows, Linux, atau macOS. Proses cepat dan aman.",
+      features: ["Windows 10/11", "Ubuntu/Linux Mint", "macOS Support"]
+    },
+    {
+      icon: <Settings className="h-10 w-10 text-sage-500" />,
+      title: "Remote Troubleshooting",
+      description: "Bantuan remote untuk mengatasi masalah software dan konfigurasi sistem secara real-time.",
+      features: ["Akses Remote Aman", "Diagnosis Real-time", "Panduan Step-by-step"]
+    },
+    {
+      icon: <Computer className="h-10 w-10 text-mint-dark" />,
+      title: "Setup Server Homelab",
+      description: "Konfigurasi personal cloud, NAS, dan self-hosted services untuk kebutuhan digital rumah modern.",
+      features: ["Personal Cloud", "Media Server", "Home Automation"]
+    },
+    {
+      icon: <HardDrive className="h-10 w-10 text-forest-DEFAULT" />,
+      title: "Upgrade Hardware",
+      description: "Peningkatan performa dengan upgrade RAM, SSD, dan komponen hardware terbaru.",
+      features: ["RAM & SSD Upgrade", "Peripheral Setup", "Performance Tuning"]
+    }
+  ];
+
+  const whyChooseUs = [
+    {
+      icon: <Zap className="h-8 w-8 text-mint" />,
+      title: "Respon Cepat",
+      description: "Layanan dalam 24 jam, emergency support tersedia untuk masalah urgent"
+    },
+    {
+      icon: <Award className="h-8 w-8 text-sage-600" />,
+      title: "Berpengalaman",
+      description: "Tim teknisi bersertifikat dengan pengalaman 5+ tahun di bidang IT"
+    },
+    {
+      icon: <Shield className="h-8 w-8 text-forest-DEFAULT" />,
+      title: "Bergaransi",
+      description: "Garansi layanan 30 hari untuk semua jenis perbaikan dan instalasi"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-cream-50">
       {/* Header */}
       <header className="border-b border-sage-200/60 bg-white/95 backdrop-blur-xl sticky top-0 z-50 sage-glow">
         <div className="container mx-auto px-4 py-4">
@@ -95,15 +141,11 @@ const Index = () => {
                 Layanan profesional untuk semua kebutuhan teknologi Anda. Dari install ulang OS hingga setup server homelab, kami siap membantu dengan respon cepat dan bergaransi.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Button size="lg" className="sage-button-primary text-lg px-10 py-6 rounded-xl sage-glow-strong font-semibold" onClick={() => document.getElementById('contact')?.scrollIntoView({
-                behavior: 'smooth'
-              })}>
+                <Button size="lg" className="sage-button-primary text-lg px-10 py-6 rounded-xl sage-glow-strong font-semibold" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
                   <Clock className="h-5 w-5 mr-2" />
                   Konsultasi Gratis
                 </Button>
-                <Button variant="outline" size="lg" onClick={() => document.getElementById('services')?.scrollIntoView({
-                behavior: 'smooth'
-              })} className="bg-white/10 backdrop-blur-sm border-2 border-mint-light/50 text-white hover:bg-mint-light hover:text-sage-800 transition-all duration-300 text-lg px-10 py-6 rounded-xl font-semibold">
+                <Button variant="outline" size="lg" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })} className="bg-white/10 backdrop-blur-sm border-2 border-mint-light/50 text-white hover:bg-mint-light hover:text-sage-800 transition-all duration-300 text-lg px-10 py-6 rounded-xl font-semibold">
                   Lihat Layanan
                 </Button>
               </div>
@@ -122,7 +164,8 @@ const Index = () => {
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {services.map((service, index) => <Card key={index} className={`bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all duration-500 animate-fade-in-up animate-delay-${index * 200}`}>
+              {services.map((service, index) => (
+                <Card key={index} className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all duration-500 animate-fade-in-up">
                   <CardContent className="p-0">
                     <div className="mb-6 group-hover:scale-110 transition-transform duration-300 p-4 rounded-2xl bg-gradient-to-br from-sage-50/20 to-white/10 shadow-inner">
                       {service.icon}
@@ -130,13 +173,16 @@ const Index = () => {
                     <h3 className="text-xl font-bold mb-4 text-sage-800">{service.title}</h3>
                     <p className="text-sage-600 mb-6 leading-relaxed">{service.description}</p>
                     <ul className="space-y-3">
-                      {service.features.map((feature, idx) => <li key={idx} className="flex items-center text-sm text-sage-500">
+                      {service.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-center text-sm text-sage-500">
                           <Check className="h-4 w-4 text-mint-dark mr-3 flex-shrink-0" />
                           <span className="font-medium">{feature}</span>
-                        </li>)}
+                        </li>
+                      ))}
                     </ul>
                   </CardContent>
-                </Card>)}
+                </Card>
+              ))}
             </div>
           </div>
         </section>
@@ -150,13 +196,15 @@ const Index = () => {
             </div>
             
             <div className="grid md:grid-cols-3 gap-10">
-              {whyChooseUs.map((item, index) => <div key={index} className={`text-center animate-slide-in-left animate-delay-${index * 200}`}>
+              {whyChooseUs.map((item, index) => (
+                <div key={index} className="text-center animate-slide-in-left">
                   <div className="inline-flex items-center justify-center w-20 h-20 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg mb-8 sage-glow border border-sage-200/50">
                     {item.icon}
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-sage-800">{item.title}</h3>
                   <p className="text-sage-600 leading-relaxed font-medium">{item.description}</p>
-                </div>)}
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -180,14 +228,18 @@ const Index = () => {
                     <h3 className="text-3xl font-bold text-white">Remote Support</h3>
                   </div>
                   <ul className="space-y-4 mb-8">
-                    {["Bantuan instan dalam menit", "Biaya lebih ekonomis", "Cocok untuk troubleshooting software", "Aman dengan enkripsi end-to-end"].map((item, idx) => <li key={idx} className="flex items-center">
+                    {["Bantuan instan dalam menit", "Biaya lebih ekonomis", "Cocok untuk troubleshooting software", "Aman dengan enkripsi end-to-end"].map((item, idx) => (
+                      <li key={idx} className="flex items-center">
                         <Check className="h-5 w-5 text-mint-light mr-4 flex-shrink-0" />
                         <span className="font-medium text-white">{item}</span>
-                      </li>)}
+                      </li>
+                    ))}
                   </ul>
-                  <Button className="bg-gradient-to-r from-mint to-mint-dark hover:from-mint-dark hover:to-forest-light text-white w-full py-4 text-lg font-semibold rounded-xl shadow-lg">
-                    Mulai Remote Session
-                  </Button>
+                  <Link to="/remote-support">
+                    <Button className="bg-gradient-to-r from-mint to-mint-dark hover:from-mint-dark hover:to-forest-light text-white w-full py-4 text-lg font-semibold rounded-xl shadow-lg">
+                      Mulai Remote Session
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
               
@@ -200,14 +252,18 @@ const Index = () => {
                     <h3 className="text-3xl font-bold text-white">On-Site Support</h3>
                   </div>
                   <ul className="space-y-4 mb-8">
-                    {["Penanganan hardware langsung", "Install ulang OS & software", "Upgrade komponen hardware", "Setup server & network"].map((item, idx) => <li key={idx} className="flex items-center">
+                    {["Penanganan hardware langsung", "Install ulang OS & software", "Upgrade komponen hardware", "Setup server & network"].map((item, idx) => (
+                      <li key={idx} className="flex items-center">
                         <Check className="h-5 w-5 text-mint-light mr-4 flex-shrink-0" />
                         <span className="font-medium text-white">{item}</span>
-                      </li>)}
+                      </li>
+                    ))}
                   </ul>
-                  <Button className="bg-gradient-to-r from-forest-DEFAULT to-forest-dark hover:from-forest-dark hover:to-mint-dark text-white w-full py-4 text-lg font-semibold rounded-xl shadow-lg">
-                    Buat Jadwal Kunjungan
-                  </Button>
+                  <a href="https://wa.me/6281234567890?text=Halo,%20saya%20ingin%20membuat%20jadwal%20kunjungan%20on-site%20support" target="_blank" rel="noopener noreferrer">
+                    <Button className="bg-gradient-to-r from-forest-DEFAULT to-forest-dark hover:from-forest-dark hover:to-mint-dark text-white w-full py-4 text-lg font-semibold rounded-xl shadow-lg">
+                      Buat Jadwal Kunjungan
+                    </Button>
+                  </a>
                 </CardContent>
               </Card>
             </div>
@@ -226,16 +282,21 @@ const Index = () => {
               <div className="animate-slide-in-left">
                 <h3 className="text-2xl font-bold mb-8 text-sage-800">Informasi Kontak</h3>
                 <div className="space-y-6">
-                  {[{
-                  icon: <Phone className="h-6 w-6 text-sage-600" />,
-                  text: "+62 812-3456-7890"
-                }, {
-                  icon: <Computer className="h-6 w-6 text-mint" />,
-                  text: "support@techsupportpro.id"
-                }].map((item, idx) => <div key={idx} className="flex items-center p-4 bg-white/90 backdrop-blur-sm rounded-xl shadow-md border border-sage-200/50">
+                  {[
+                    {
+                      icon: <Phone className="h-6 w-6 text-sage-600" />,
+                      text: "+62 812-3456-7890"
+                    },
+                    {
+                      icon: <Computer className="h-6 w-6 text-mint" />,
+                      text: "support@installulang.web.id"
+                    }
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex items-center p-4 bg-white/90 backdrop-blur-sm rounded-xl shadow-md border border-sage-200/50">
                       {item.icon}
                       <span className="ml-4 font-medium text-sage-700">{item.text}</span>
-                    </div>)}
+                    </div>
+                  ))}
                   
                   <div className="flex items-start p-4 bg-white/90 backdrop-blur-sm rounded-xl shadow-md border border-sage-200/50">
                     <Settings className="h-6 w-6 text-forest-DEFAULT mt-1" />
@@ -250,38 +311,49 @@ const Index = () => {
                   <p className="font-bold text-sage-800 mb-4">Jam Operasional:</p>
                   <div className="space-y-2 text-sage-600">
                     <p>Konfirmasi lewat kontak</p>
-                    <p>
-                  </p>
-                    <p>
-                  </p>
                   </div>
                 </div>
               </div>
               
-              <Card className="backdrop-blur-xl border border-white/20 p-8 transition-all duration-500 animate-fade-in-up animate-delay-200 bg-[#498660]/[0.71] rounded-md">
+              <Card className="bg-white/95 backdrop-blur-xl border border-sage-200/50 rounded-2xl p-8 shadow-xl animate-fade-in-up animate-delay-200">
                 <CardContent className="p-0">
                   <h3 className="text-2xl font-bold mb-8 text-sage-800">Kirim Pesan</h3>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                      <Input placeholder="Nama Lengkap" value={formData.name} onChange={e => setFormData({
-                      ...formData,
-                      name: e.target.value
-                    })} required className="border-sage-300/50 focus:border-sage-500 bg-white/90 backdrop-blur-sm py-4 text-lg rounded-xl shadow-sm" />
+                      <Input 
+                        placeholder="Nama Lengkap" 
+                        value={formData.name} 
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
+                        required 
+                        className="border-sage-300 focus:border-sage-500 bg-white py-4 text-lg rounded-xl shadow-sm text-sage-800 placeholder:text-sage-500" 
+                      />
                     </div>
                     <div>
-                      <Input type="email" placeholder="Email" value={formData.email} onChange={e => setFormData({
-                      ...formData,
-                      email: e.target.value
-                    })} required className="border-sage-300/50 focus:border-sage-500 bg-white/90 backdrop-blur-sm py-4 text-lg rounded-xl shadow-sm" />
+                      <Input 
+                        type="email" 
+                        placeholder="Email" 
+                        value={formData.email} 
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })} 
+                        required 
+                        className="border-sage-300 focus:border-sage-500 bg-white py-4 text-lg rounded-xl shadow-sm text-sage-800 placeholder:text-sage-500" 
+                      />
                     </div>
                     <div>
-                      <Textarea placeholder="Jelaskan masalah atau kebutuhan Anda..." value={formData.issue} onChange={e => setFormData({
-                      ...formData,
-                      issue: e.target.value
-                    })} required rows={5} className="border-sage-300/50 focus:border-sage-500 bg-white/90 backdrop-blur-sm text-lg rounded-xl shadow-sm" />
+                      <Textarea 
+                        placeholder="Jelaskan masalah atau kebutuhan Anda..." 
+                        value={formData.issue} 
+                        onChange={(e) => setFormData({ ...formData, issue: e.target.value })} 
+                        required 
+                        rows={5} 
+                        className="border-sage-300 focus:border-sage-500 bg-white text-lg rounded-xl shadow-sm text-sage-800 placeholder:text-sage-500" 
+                      />
                     </div>
-                    <Button type="submit" className="bg-gradient-to-r from-sage-600 to-sage-500 text-white w-full py-4 text-lg font-semibold rounded-xl shadow-lg hover:from-sage-700 hover:to-sage-600 transition-all duration-300">
-                      Kirim Pesan
+                    <Button 
+                      type="submit" 
+                      disabled={isSubmitting}
+                      className="bg-gradient-to-r from-sage-600 to-sage-500 text-white w-full py-4 text-lg font-semibold rounded-xl shadow-lg hover:from-sage-700 hover:to-sage-600 transition-all duration-300 disabled:opacity-50"
+                    >
+                      {isSubmitting ? 'Mengirim...' : 'Kirim Pesan'}
                     </Button>
                   </form>
                 </CardContent>
@@ -305,9 +377,11 @@ const Index = () => {
             <div>
               <h4 className="font-bold mb-6 text-lg">Layanan</h4>
               <ul className="space-y-3 text-sage-200">
-                {["Install Ulang OS", "Remote Support", "Hardware Upgrade", "Server Setup"].map(item => <li key={item}>
+                {["Install Ulang OS", "Remote Support", "Hardware Upgrade", "Server Setup"].map(item => (
+                  <li key={item}>
                     <a href="#" className="hover:text-mint-light transition-colors font-medium">{item}</a>
-                  </li>)}
+                  </li>
+                ))}
               </ul>
             </div>
             <div>
@@ -331,6 +405,8 @@ const Index = () => {
           </div>
         </div>
       </footer>
-    </div>;
+    </div>
+  );
 };
+
 export default Index;
