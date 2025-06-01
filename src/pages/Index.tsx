@@ -258,7 +258,7 @@ const Index = () => {
                 </div>
               </div>
               
-              <Card className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all duration-500 animate-fade-in-up animate-delay-200">
+              <Card className="backdrop-blur-xl border border-white/20 p-8 transition-all duration-500 animate-fade-in-up animate-delay-200 bg-[#498660]/[0.71] rounded-md">
                 <CardContent className="p-0">
                   <h3 className="text-2xl font-bold mb-8 text-sage-800">Kirim Pesan</h3>
                   <form onSubmit={handleSubmit} className="space-y-6">
