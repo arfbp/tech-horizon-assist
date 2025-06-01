@@ -107,7 +107,11 @@ const Index = () => {
       description: (
         <div>
           Garansi layanan 30 hari untuk semua jenis perbaikan dan instalasi
-          <div className="text-xs mt-1 opacity-75">*syarat dan ketentuan berlaku</div>
+          <div className="text-xs mt-1 opacity-75">
+            <Link to="/TnC" className="underline hover:text-forest-light transition-colors">
+              *syarat dan ketentuan berlaku
+            </Link>
+          </div>
         </div>
       )
     }
