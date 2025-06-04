@@ -178,9 +178,9 @@ const Index = () => {
             
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {services.map((service, index) => (
-                <Card key={index} className="bg-dark-800/10 backdrop-blur-xl border border-dark-700/20 rounded-2xl p-8 hover:bg-dark-700/20 transition-all duration-500 animate-fade-in-up">
+                <Card key={index} className="bg-dark-800/70 backdrop-blur-xl border border-pintu-500/30 rounded-2xl p-8 hover:bg-dark-700/80 hover:border-pintu-400/50 transition-all duration-500 animate-fade-in-up shadow-lg">
                   <CardContent className="p-0">
-                    <div className="mb-6 group-hover:scale-110 transition-transform duration-300 p-4 rounded-2xl bg-gradient-to-br from-dark-800/20 to-dark-700/10 shadow-inner">
+                    <div className="mb-6 group-hover:scale-110 transition-transform duration-300 p-4 rounded-2xl bg-gradient-to-br from-pintu-500/10 to-pintu-600/5 shadow-inner border border-pintu-500/20">
                       {service.icon}
                     </div>
                     <h3 className="text-xl font-bold mb-4 text-white">{service.title}</h3>
@@ -233,7 +233,7 @@ const Index = () => {
             </div>
             
             <div className="grid md:grid-cols-2 gap-10">
-              <Card className="bg-dark-800/10 backdrop-blur-xl border border-dark-700/20 rounded-2xl p-8 hover:bg-dark-700/20 transition-all duration-500 animate-fade-in-up">
+              <Card className="bg-dark-800/70 backdrop-blur-xl border border-electric/30 rounded-2xl p-8 hover:bg-dark-700/80 hover:border-electric/50 transition-all duration-500 animate-fade-in-up shadow-lg">
                 <CardContent className="p-0">
                   <div className="flex items-center mb-8">
                     <div className="p-3 rounded-xl bg-gradient-to-br from-electric to-pintu-500 text-dark-900 mr-4 shadow-lg">
@@ -257,7 +257,7 @@ const Index = () => {
                 </CardContent>
               </Card>
               
-              <Card className="bg-dark-800/10 backdrop-blur-xl border border-dark-700/20 rounded-2xl p-8 hover:bg-dark-700/20 transition-all duration-500 animate-fade-in-up animate-delay-200">
+              <Card className="bg-dark-800/70 backdrop-blur-xl border border-success-DEFAULT/30 rounded-2xl p-8 hover:bg-dark-700/80 hover:border-success-DEFAULT/50 transition-all duration-500 animate-fade-in-up animate-delay-200 shadow-lg">
                 <CardContent className="p-0">
                   <div className="flex items-center mb-8">
                     <div className="p-3 rounded-xl bg-gradient-to-br from-success-DEFAULT to-success-dark text-white mr-4 shadow-lg">
