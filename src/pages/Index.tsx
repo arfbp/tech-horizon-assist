@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,6 +10,20 @@ import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
+declare global {
+  interface Window {
+    turnstile: {
+      render: (element: string | HTMLElement, options: {
+        sitekey: string;
+        callback: (token: string) => void;
+        'error-callback'?: () => void;
+        'expired-callback'?: () => void;
+      }) => string;
+      reset: (widgetId?: string) => void;
+    };
+  }
+}
+
 const Index = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
@@ -19,6 +32,7 @@ const Index = () => {
     issue: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   // Scroll animation hooks for each section
   const heroAnimation = useScrollAnimation({ threshold: 0.3 });
@@ -27,8 +41,31 @@ const Index = () => {
   const comparisonAnimation = useScrollAnimation({ threshold: 0.2 });
   const contactAnimation = useScrollAnimation({ threshold: 0.2 });
 
+  const handleCaptchaSuccess = (token: string) => {
+    setCaptchaToken(token);
+  };
+
+  const handleCaptchaError = () => {
+    setCaptchaToken(null);
+    toast({
+      title: "Captcha Error",
+      description: "Terjadi kesalahan dengan captcha. Silakan coba lagi.",
+      variant: "destructive"
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!captchaToken) {
+      toast({
+        title: "Captcha Required",
+        description: "Mohon selesaikan captcha terlebih dahulu",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -36,7 +73,8 @@ const Index = () => {
         body: {
           name: formData.name,
           email: formData.email,
-          issue: formData.issue
+          issue: formData.issue,
+          captchaToken: captchaToken
         }
       });
 
@@ -53,6 +91,12 @@ const Index = () => {
         email: '',
         issue: ''
       });
+      setCaptchaToken(null);
+      
+      // Reset captcha
+      if (window.turnstile) {
+        window.turnstile.reset();
+      }
     } catch (error) {
       console.error('Error sending email:', error);
       toast({
@@ -67,6 +111,12 @@ const Index = () => {
         email: '',
         issue: ''
       });
+      setCaptchaToken(null);
+      
+      // Reset captcha
+      if (window.turnstile) {
+        window.turnstile.reset();
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -452,9 +502,18 @@ const Index = () => {
                         className="border-dark-600 focus:border-pintu-500 bg-dark-700 text-lg rounded-xl shadow-sm text-white placeholder:text-gray-400" 
                       />
                     </div>
+                    <div className="flex justify-center">
+                      <div 
+                        className="cf-turnstile" 
+                        data-sitekey="0x4AAAAAABgCGRmwGALaLhlv"
+                        data-callback="handleCaptchaSuccess"
+                        data-error-callback="handleCaptchaError"
+                        data-theme="dark"
+                      ></div>
+                    </div>
                     <Button 
                       type="submit" 
-                      disabled={isSubmitting}
+                      disabled={isSubmitting || !captchaToken}
                       className="bg-gradient-to-r from-pintu-600 to-pintu-500 text-dark-900 w-full py-4 text-lg font-semibold rounded-xl shadow-lg hover:from-pintu-700 hover:to-pintu-600 transition-all duration-300 disabled:opacity-50"
                     >
                       {isSubmitting ? 'Mengirim...' : 'Kirim Pesan'}
@@ -509,6 +568,26 @@ const Index = () => {
           </div>
         </div>
       </footer>
+      
+      <script dangerouslySetInnerHTML={{
+        __html: `
+          window.handleCaptchaSuccess = function(token) {
+            window.dispatchEvent(new CustomEvent('captcha-success', { detail: token }));
+          };
+          
+          window.handleCaptchaError = function() {
+            window.dispatchEvent(new CustomEvent('captcha-error'));
+          };
+          
+          window.addEventListener('captcha-success', function(e) {
+            console.log('Captcha completed with token:', e.detail);
+          });
+          
+          window.addEventListener('captcha-error', function() {
+            console.log('Captcha error occurred');
+          });
+        `
+      }} />
     </div>
   );
 };
