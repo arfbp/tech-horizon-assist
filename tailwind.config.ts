@@ -63,40 +63,45 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// White-Sage Green Color Palette
-				sage: {
-					// Primary Sage Greens
-					50: '#F8FAF9',
-					100: '#F0F5F3',
-					200: '#E1EBE7',
-					300: '#C7D6D0',
-					400: '#9BB8AB',
-					500: '#6B9B7F',
-					600: '#4A7C59',
-					700: '#3A5E46',
-					800: '#2F4A38',
-					900: '#1F3025',
-					950: '#0D1610'
+				// Pintu-inspired Color Palette
+				pintu: {
+					// Primary Cyan/Teal Colors
+					50: '#F0FDFA',
+					100: '#CCFBF1',
+					200: '#99F6E4',
+					300: '#5EEAD4',
+					400: '#2DD4BF',
+					500: '#14B8A6',
+					600: '#0D9488',
+					700: '#0F766E',
+					800: '#115E59',
+					900: '#134E4A',
+					950: '#042F2E'
 				},
-				// Complementary colors
-				cream: {
-					50: '#FEFFFE',
-					100: '#FDFDFC',
-					200: '#FAFAF8',
-					300: '#F7F7F4',
-					400: '#F1F1EC',
-					500: '#EAEAE3'
+				// Dark theme colors
+				dark: {
+					50: '#F8FAFC',
+					100: '#F1F5F9',
+					200: '#E2E8F0',
+					300: '#CBD5E1',
+					400: '#94A3B8',
+					500: '#64748B',
+					600: '#475569',
+					700: '#334155',
+					800: '#1E293B',
+					900: '#0F172A',
+					950: '#020617'
 				},
-				// Accent colors that work with sage
-				mint: {
-					light: '#A8E6CF',
-					DEFAULT: '#7FDBBC',
-					dark: '#56C596'
+				// Accent colors
+				electric: {
+					light: '#22D3EE',
+					DEFAULT: '#06B6D4',
+					dark: '#0891B2'
 				},
-				forest: {
-					light: '#8FBC8F',
-					DEFAULT: '#558B2F',
-					dark: '#33691E'
+				success: {
+					light: '#10B981',
+					DEFAULT: '#059669',
+					dark: '#047857'
 				}
 			},
 			borderRadius: {
@@ -165,10 +170,10 @@ export default {
 				},
 				'pulse-glow': {
 					'0%, 100%': {
-						boxShadow: '0 0 20px rgba(107, 155, 127, 0.4)'
+						boxShadow: '0 0 20px rgba(20, 184, 166, 0.4)'
 					},
 					'50%': {
-						boxShadow: '0 0 40px rgba(107, 155, 127, 0.6)'
+						boxShadow: '0 0 40px rgba(20, 184, 166, 0.6)'
 					}
 				},
 				'gradient-shift': {
@@ -192,8 +197,8 @@ export default {
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-				'sage-gradient': 'linear-gradient(135deg, #6B9B7F 0%, #4A7C59 50%, #3A5E46 100%)',
-				'light-gradient': 'linear-gradient(135deg, #FEFFFE 0%, #F8FAF9 50%, #F0F5F3 100%)',
+				'pintu-gradient': 'linear-gradient(135deg, #14B8A6 0%, #0D9488 50%, #0F766E 100%)',
+				'dark-gradient': 'linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%)',
 			}
 		}
 	},
