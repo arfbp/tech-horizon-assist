@@ -9,6 +9,7 @@ import { Laptop, Settings, Zap, HardDrive, Users, Check, Phone, Computer, Shield
 import { useToast } from '@/hooks/use-toast';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const Index = () => {
   const { toast } = useToast();
@@ -18,6 +19,13 @@ const Index = () => {
     issue: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Scroll animation hooks for each section
+  const heroAnimation = useScrollAnimation({ threshold: 0.3 });
+  const servicesAnimation = useScrollAnimation({ threshold: 0.2 });
+  const aboutAnimation = useScrollAnimation({ threshold: 0.2 });
+  const comparisonAnimation = useScrollAnimation({ threshold: 0.2 });
+  const contactAnimation = useScrollAnimation({ threshold: 0.2 });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -142,9 +150,16 @@ const Index = () => {
 
       <main>
         {/* Hero Section */}
-        <section className="py-24 px-4 text-center hero-bg relative overflow-hidden">
+        <section 
+          ref={heroAnimation.elementRef}
+          className={`py-24 px-4 text-center hero-bg relative overflow-hidden transition-all duration-1000 ${
+            heroAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <div className="container mx-auto max-w-5xl relative">
-            <div className="animate-fade-in">
+            <div className={`transition-all duration-1000 delay-300 ${
+              heroAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
               <h1 className="text-4xl md:text-7xl font-bold mb-8 leading-tight text-white">
                 Jasa Install Ulang Laptop & Komputer,{' '}
                 <span className="text-pintu-gradient">Troubleshoot & Cloud Server</span>
@@ -166,10 +181,18 @@ const Index = () => {
         </section>
 
         {/* Services Section */}
-        <section id="services" className="py-24 px-4 tech-bg">
+        <section 
+          id="services" 
+          ref={servicesAnimation.elementRef}
+          className={`py-24 px-4 tech-bg transition-all duration-1000 ${
+            servicesAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1920&h=1080&fit=crop&auto=format&q=80')] opacity-5 bg-cover bg-center"></div>
           <div className="container mx-auto max-w-7xl relative">
-            <div className="text-center mb-20 animate-fade-in-up">
+            <div className={`text-center mb-20 transition-all duration-1000 delay-200 ${
+              servicesAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Layanan Profesional Kami</h2>
               <p className="text-gray-300 text-xl max-w-3xl mx-auto font-medium">
                 Solusi lengkap untuk semua kebutuhan teknologi Anda dengan standar profesional tertinggi
@@ -178,7 +201,18 @@ const Index = () => {
             
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {services.map((service, index) => (
-                <Card key={index} className="bg-dark-800/70 backdrop-blur-xl border border-pintu-500/30 rounded-2xl p-8 hover:bg-dark-700/80 hover:border-pintu-400/50 transition-all duration-500 animate-fade-in-up shadow-lg">
+                <Card 
+                  key={index} 
+                  className={`bg-dark-800/70 backdrop-blur-xl border border-pintu-500/30 rounded-2xl p-8 hover:bg-dark-700/80 hover:border-pintu-400/50 transition-all duration-500 shadow-lg ${
+                    servicesAnimation.isVisible 
+                      ? 'opacity-100 translate-y-0' 
+                      : 'opacity-0 translate-y-10'
+                  }`}
+                  style={{ 
+                    transitionDelay: servicesAnimation.isVisible ? `${400 + index * 100}ms` : '0ms',
+                    transitionDuration: '800ms'
+                  }}
+                >
                   <CardContent className="p-0">
                     <div className="mb-6 group-hover:scale-110 transition-transform duration-300 p-4 rounded-2xl bg-gradient-to-br from-pintu-500/10 to-pintu-600/5 shadow-inner border border-pintu-500/20">
                       {service.icon}
@@ -201,17 +235,35 @@ const Index = () => {
         </section>
 
         {/* Why Choose Us */}
-        <section id="about" className="py-24 px-4 section-bg">
+        <section 
+          id="about" 
+          ref={aboutAnimation.elementRef}
+          className={`py-24 px-4 section-bg transition-all duration-1000 ${
+            aboutAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=1920&h=1080&fit=crop&auto=format&q=80')] opacity-5 bg-cover bg-center"></div>
           <div className="container mx-auto max-w-6xl relative">
-            <div className="text-center mb-20 animate-fade-in-up">
+            <div className={`text-center mb-20 transition-all duration-1000 delay-200 ${
+              aboutAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Mengapa Pilih Kami?</h2>
               <p className="text-gray-300 text-xl font-medium">Komitmen kami untuk memberikan layanan terbaik</p>
             </div>
             
             <div className="grid md:grid-cols-3 gap-10">
               {whyChooseUs.map((item, index) => (
-                <div key={index} className="text-center animate-slide-in-left">
+                <div 
+                  key={index} 
+                  className={`text-center transition-all duration-800 ${
+                    aboutAnimation.isVisible 
+                      ? 'opacity-100 translate-y-0' 
+                      : 'opacity-0 translate-y-10'
+                  }`}
+                  style={{ 
+                    transitionDelay: aboutAnimation.isVisible ? `${400 + index * 150}ms` : '0ms'
+                  }}
+                >
                   <div className="inline-flex items-center justify-center w-20 h-20 bg-dark-700/90 backdrop-blur-sm rounded-2xl shadow-lg mb-8 pintu-glow border border-dark-600/50">
                     {item.icon}
                   </div>
@@ -224,16 +276,29 @@ const Index = () => {
         </section>
 
         {/* Comparison Section */}
-        <section className="py-24 px-4 bg-gradient-to-br from-dark-950 via-dark-900 to-dark-800 relative overflow-hidden">
+        <section 
+          ref={comparisonAnimation.elementRef}
+          className={`py-24 px-4 bg-gradient-to-br from-dark-950 via-dark-900 to-dark-800 relative overflow-hidden transition-all duration-1000 ${
+            comparisonAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1920&h=1080&fit=crop&auto=format&q=80')] opacity-10 bg-cover bg-center"></div>
           <div className="container mx-auto max-w-5xl relative">
-            <div className="text-center mb-20 animate-fade-in-up">
+            <div className={`text-center mb-20 transition-all duration-1000 delay-200 ${
+              comparisonAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Remote vs On-Site Support</h2>
               <p className="text-gray-300 text-xl font-medium">Pilih metode yang sesuai dengan kebutuhan Anda</p>
             </div>
             
             <div className="grid md:grid-cols-2 gap-10">
-              <Card className="bg-dark-800/70 backdrop-blur-xl border border-electric/30 rounded-2xl p-8 hover:bg-dark-700/80 hover:border-electric/50 transition-all duration-500 animate-fade-in-up shadow-lg">
+              <Card className={`bg-dark-800/70 backdrop-blur-xl border border-electric/30 rounded-2xl p-8 hover:bg-dark-700/80 hover:border-electric/50 transition-all duration-500 shadow-lg ${
+                comparisonAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+              style={{ 
+                transitionDelay: comparisonAnimation.isVisible ? '400ms' : '0ms',
+                transitionDuration: '800ms'
+              }}>
                 <CardContent className="p-0">
                   <div className="flex items-center mb-8">
                     <div className="p-3 rounded-xl bg-gradient-to-br from-electric to-pintu-500 text-dark-900 mr-4 shadow-lg">
@@ -257,7 +322,13 @@ const Index = () => {
                 </CardContent>
               </Card>
               
-              <Card className="bg-dark-800/70 backdrop-blur-xl border border-success-DEFAULT/30 rounded-2xl p-8 hover:bg-dark-700/80 hover:border-success-DEFAULT/50 transition-all duration-500 animate-fade-in-up animate-delay-200 shadow-lg">
+              <Card className={`bg-dark-800/70 backdrop-blur-xl border border-success-DEFAULT/30 rounded-2xl p-8 hover:bg-dark-700/80 hover:border-success-DEFAULT/50 transition-all duration-500 shadow-lg ${
+                comparisonAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+              style={{ 
+                transitionDelay: comparisonAnimation.isVisible ? '600ms' : '0ms',
+                transitionDuration: '800ms'
+              }}>
                 <CardContent className="p-0">
                   <div className="flex items-center mb-8">
                     <div className="p-3 rounded-xl bg-gradient-to-br from-success-DEFAULT to-success-dark text-white mr-4 shadow-lg">
@@ -285,16 +356,29 @@ const Index = () => {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="py-24 px-4 section-bg">
+        <section 
+          id="contact" 
+          ref={contactAnimation.elementRef}
+          className={`py-24 px-4 section-bg transition-all duration-1000 ${
+            contactAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=1920&h=1080&fit=crop&auto=format&q=80')] opacity-5 bg-cover bg-center"></div>
           <div className="container mx-auto max-w-5xl relative">
-            <div className="text-center mb-20 animate-fade-in-up">
+            <div className={`text-center mb-20 transition-all duration-1000 delay-200 ${
+              contactAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Hubungi Kami</h2>
               <p className="text-gray-300 text-xl font-medium">Konsultasi gratis untuk menentukan solusi terbaik</p>
             </div>
             
             <div className="grid md:grid-cols-2 gap-16">
-              <div className="animate-slide-in-left">
+              <div className={`transition-all duration-800 ${
+                contactAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+              style={{ 
+                transitionDelay: contactAnimation.isVisible ? '400ms' : '0ms'
+              }}>
                 <h3 className="text-2xl font-bold mb-8 text-white">Informasi Kontak</h3>
                 <div className="space-y-6">
                   {[
@@ -330,7 +414,12 @@ const Index = () => {
                 </div>
               </div>
               
-              <Card className="bg-dark-800/95 backdrop-blur-xl border border-dark-700/50 rounded-2xl p-8 shadow-xl animate-fade-in-up animate-delay-200">
+              <Card className={`bg-dark-800/95 backdrop-blur-xl border border-dark-700/50 rounded-2xl p-8 shadow-xl transition-all duration-800 ${
+                contactAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+              style={{ 
+                transitionDelay: contactAnimation.isVisible ? '600ms' : '0ms'
+              }}>
                 <CardContent className="p-0">
                   <h3 className="text-2xl font-bold mb-8 text-white">Kirim Pesan</h3>
                   <form onSubmit={handleSubmit} className="space-y-6">
