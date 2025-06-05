@@ -80,7 +80,7 @@ const handler = async (req: Request): Promise<Response> => {
           </div>
           
           <div style="text-align: center; margin: 30px 0;">
-            <a href="https://wa.me/6281234567890" 
+            <a href="https://wa.me/6287859114643" 
                style="display: inline-block; background: linear-gradient(135deg, #6B9B7F, #4A7C59); 
                       color: white; text-decoration: none; padding: 15px 30px; 
                       border-radius: 12px; font-weight: bold; font-size: 16px;">
@@ -91,7 +91,7 @@ const handler = async (req: Request): Promise<Response> => {
           <div style="margin-top: 30px; padding: 15px; background-color: #F0F5F3; border-radius: 8px; text-align: center;">
             <p style="margin: 0; color: #4A7C59; font-size: 14px;">
               <strong>InstallUlang</strong> - Solusi IT Profesional<br>
-              📧 support@installulang.web.id | 📱 +62 812-3456-7890
+              📧 support@installulang.web.id | 📱 +62 878-5911-4643
             </p>
           </div>
         </div>
