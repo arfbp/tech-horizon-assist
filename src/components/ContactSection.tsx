@@ -56,7 +56,7 @@ const ContactSection = () => {
           'expired-callback': () => {
             setCaptchaToken(null);
           },
-          theme: 'dark'
+          theme: 'light'
         });
         setCaptchaWidgetId(widgetId);
       }
@@ -150,7 +150,7 @@ const ContactSection = () => {
     <section 
       id="contact" 
       ref={contactAnimation.elementRef}
-      className={`py-24 px-4 section-bg transition-all duration-1000 ${
+      className={`py-24 px-4 bg-gradient-to-br from-slate-50 to-blue-50 transition-all duration-1000 ${
         contactAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       }`}
     >
@@ -159,8 +159,8 @@ const ContactSection = () => {
         <div className={`text-center mb-20 transition-all duration-1000 delay-200 ${
           contactAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Hubungi Kami</h2>
-          <p className="text-gray-300 text-xl font-medium">Konsultasi gratis untuk menentukan solusi terbaik</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">Hubungi Kami</h2>
+          <p className="text-gray-600 text-xl font-medium">Konsultasi gratis untuk menentukan solusi terbaik</p>
         </div>
         
         <div className="grid md:grid-cols-2 gap-16">
@@ -170,49 +170,49 @@ const ContactSection = () => {
           style={{ 
             transitionDelay: contactAnimation.isVisible ? '400ms' : '0ms'
           }}>
-            <h3 className="text-2xl font-bold mb-8 text-white">Informasi Kontak</h3>
+            <h3 className="text-2xl font-bold mb-8 text-gray-800">Informasi Kontak</h3>
             <div className="space-y-6">
               {[
                 {
-                  icon: <Phone className="h-6 w-6 text-pintu-400" />,
+                  icon: <Phone className="h-6 w-6 text-pintu-600" />,
                   text: "+62 878-5911-4643"
                 },
                 {
-                  icon: <Computer className="h-6 w-6 text-electric" />,
+                  icon: <Computer className="h-6 w-6 text-blue-600" />,
                   text: "support@installulang.web.id"
                 }
               ].map((item, idx) => (
-                <div key={idx} className="flex items-center p-4 bg-dark-800/90 backdrop-blur-sm rounded-xl shadow-md border border-dark-700/50">
+                <div key={idx} className="flex items-center p-4 bg-white rounded-xl shadow-md border border-gray-200 hover:shadow-lg transition-shadow">
                   {item.icon}
-                  <span className="ml-4 font-medium text-gray-300">{item.text}</span>
+                  <span className="ml-4 font-medium text-gray-700">{item.text}</span>
                 </div>
               ))}
               
-              <div className="flex items-start p-4 bg-dark-800/90 backdrop-blur-sm rounded-xl shadow-md border border-dark-700/50">
-                <Settings className="h-6 w-6 text-success-DEFAULT mt-1" />
+              <div className="flex items-start p-4 bg-white rounded-xl shadow-md border border-gray-200 hover:shadow-lg transition-shadow">
+                <Settings className="h-6 w-6 text-green-600 mt-1" />
                 <div className="ml-4">
-                  <p className="font-bold text-white">Area Layanan</p>
-                  <p className="text-gray-300">Jakarta & sekitarnya</p>
+                  <p className="font-bold text-gray-800">Area Layanan</p>
+                  <p className="text-gray-600">Jakarta & sekitarnya</p>
                 </div>
               </div>
             </div>
             
-            <div className="mt-10 p-6 bg-dark-800/90 backdrop-blur-sm rounded-xl shadow-md border border-dark-700/50">
-              <p className="font-bold text-white mb-4">Jam Operasional:</p>
-              <div className="space-y-2 text-gray-300">
+            <div className="mt-10 p-6 bg-white rounded-xl shadow-md border border-gray-200">
+              <p className="font-bold text-gray-800 mb-4">Jam Operasional:</p>
+              <div className="space-y-2 text-gray-600">
                 <p>Konfirmasi lewat kontak</p>
               </div>
             </div>
           </div>
           
-          <Card className={`bg-dark-800/95 backdrop-blur-xl border border-dark-700/50 rounded-2xl p-8 shadow-xl transition-all duration-800 ${
+          <Card className={`bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-xl transition-all duration-800 hover:shadow-2xl ${
             contactAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
           style={{ 
             transitionDelay: contactAnimation.isVisible ? '600ms' : '0ms'
           }}>
             <CardContent className="p-0">
-              <h3 className="text-2xl font-bold mb-8 text-white">Kirim Pesan</h3>
+              <h3 className="text-2xl font-bold mb-8 text-gray-800">Kirim Pesan</h3>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <Input 
@@ -220,7 +220,7 @@ const ContactSection = () => {
                     value={formData.name} 
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
                     required 
-                    className="border-dark-600 focus:border-pintu-500 bg-dark-700 py-4 text-lg rounded-xl shadow-sm text-white placeholder:text-gray-400" 
+                    className="border-2 border-gray-300 focus:border-pintu-500 bg-white py-4 text-lg rounded-xl shadow-sm text-gray-800 placeholder:text-gray-500 hover:border-gray-400 transition-colors" 
                   />
                 </div>
                 <div>
@@ -230,7 +230,7 @@ const ContactSection = () => {
                     value={formData.email} 
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })} 
                     required 
-                    className="border-dark-600 focus:border-pintu-500 bg-dark-700 py-4 text-lg rounded-xl shadow-sm text-white placeholder:text-gray-400" 
+                    className="border-2 border-gray-300 focus:border-pintu-500 bg-white py-4 text-lg rounded-xl shadow-sm text-gray-800 placeholder:text-gray-500 hover:border-gray-400 transition-colors" 
                   />
                 </div>
                 <div>
@@ -240,7 +240,7 @@ const ContactSection = () => {
                     onChange={(e) => setFormData({ ...formData, issue: e.target.value })} 
                     required 
                     rows={5} 
-                    className="border-dark-600 focus:border-pintu-500 bg-dark-700 text-lg rounded-xl shadow-sm text-white placeholder:text-gray-400" 
+                    className="border-2 border-gray-300 focus:border-pintu-500 bg-white text-lg rounded-xl shadow-sm text-gray-800 placeholder:text-gray-500 hover:border-gray-400 transition-colors" 
                   />
                 </div>
                 <div className="flex justify-center">
@@ -249,7 +249,7 @@ const ContactSection = () => {
                 <Button 
                   type="submit" 
                   disabled={isSubmitting || !captchaToken}
-                  className="bg-gradient-to-r from-pintu-600 to-pintu-500 text-dark-900 w-full py-4 text-lg font-semibold rounded-xl shadow-lg hover:from-pintu-700 hover:to-pintu-600 transition-all duration-300 disabled:opacity-50"
+                  className="bg-gradient-to-r from-pintu-600 to-pintu-500 text-white w-full py-4 text-lg font-semibold rounded-xl shadow-lg hover:from-pintu-700 hover:to-pintu-600 transition-all duration-300 disabled:opacity-50 hover:shadow-xl"
                 >
                   {isSubmitting ? 'Mengirim...' : 'Kirim Pesan'}
                 </Button>
