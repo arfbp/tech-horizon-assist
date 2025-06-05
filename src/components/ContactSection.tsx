@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -17,6 +17,7 @@ declare global {
         callback: (token: string) => void;
         'error-callback'?: () => void;
         'expired-callback'?: () => void;
+        theme?: string;
       }) => string;
       reset: (widgetId?: string) => void;
     };
@@ -32,21 +33,50 @@ const ContactSection = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaWidgetId, setCaptchaWidgetId] = useState<string | null>(null);
 
   const contactAnimation = useScrollAnimation({ threshold: 0.2 });
 
-  const handleCaptchaSuccess = (token: string) => {
-    setCaptchaToken(token);
-  };
+  useEffect(() => {
+    const renderCaptcha = () => {
+      if (window.turnstile && !captchaWidgetId) {
+        const widgetId = window.turnstile.render('#turnstile-widget', {
+          sitekey: '0x4AAAAAABgIoVU0xNFC8S5d',
+          callback: (token: string) => {
+            setCaptchaToken(token);
+          },
+          'error-callback': () => {
+            setCaptchaToken(null);
+            toast({
+              title: "Captcha Error",
+              description: "Terjadi kesalahan dengan captcha. Silakan coba lagi.",
+              variant: "destructive"
+            });
+          },
+          'expired-callback': () => {
+            setCaptchaToken(null);
+          },
+          theme: 'dark'
+        });
+        setCaptchaWidgetId(widgetId);
+      }
+    };
 
-  const handleCaptchaError = () => {
-    setCaptchaToken(null);
-    toast({
-      title: "Captcha Error",
-      description: "Terjadi kesalahan dengan captcha. Silakan coba lagi.",
-      variant: "destructive"
-    });
-  };
+    // Check if script is already loaded
+    if (window.turnstile) {
+      renderCaptcha();
+    } else {
+      // Wait for script to load
+      const checkTurnstile = setInterval(() => {
+        if (window.turnstile) {
+          clearInterval(checkTurnstile);
+          renderCaptcha();
+        }
+      }, 100);
+
+      return () => clearInterval(checkTurnstile);
+    }
+  }, [captchaWidgetId, toast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,8 +118,8 @@ const ContactSection = () => {
       setCaptchaToken(null);
       
       // Reset captcha
-      if (window.turnstile) {
-        window.turnstile.reset();
+      if (window.turnstile && captchaWidgetId) {
+        window.turnstile.reset(captchaWidgetId);
       }
     } catch (error) {
       console.error('Error sending email:', error);
@@ -108,8 +138,8 @@ const ContactSection = () => {
       setCaptchaToken(null);
       
       // Reset captcha
-      if (window.turnstile) {
-        window.turnstile.reset();
+      if (window.turnstile && captchaWidgetId) {
+        window.turnstile.reset(captchaWidgetId);
       }
     } finally {
       setIsSubmitting(false);
@@ -214,13 +244,7 @@ const ContactSection = () => {
                   />
                 </div>
                 <div className="flex justify-center">
-                  <div 
-                    className="cf-turnstile" 
-                    data-sitekey="0x4AAAAAABgCGRmwGALaLhlv"
-                    data-callback="handleCaptchaSuccess"
-                    data-error-callback="handleCaptchaError"
-                    data-theme="dark"
-                  ></div>
+                  <div id="turnstile-widget" className="mb-4"></div>
                 </div>
                 <Button 
                   type="submit" 

@@ -6,8 +6,26 @@ import WhyChooseUsSection from '@/components/WhyChooseUsSection';
 import ComparisonSection from '@/components/ComparisonSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
+import { useEffect } from 'react';
 
 const Index = () => {
+  useEffect(() => {
+    // Load Cloudflare Turnstile script
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+
+    return () => {
+      // Cleanup script on unmount
+      const existingScript = document.querySelector('script[src="https://challenges.cloudflare.com/turnstile/v0/api.js"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-dark-900">
       <Header />
@@ -21,26 +39,6 @@ const Index = () => {
       </main>
 
       <Footer />
-      
-      <script dangerouslySetInnerHTML={{
-        __html: `
-          window.handleCaptchaSuccess = function(token) {
-            window.dispatchEvent(new CustomEvent('captcha-success', { detail: token }));
-          };
-          
-          window.handleCaptchaError = function() {
-            window.dispatchEvent(new CustomEvent('captcha-error'));
-          };
-          
-          window.addEventListener('captcha-success', function(e) {
-            console.log('Captcha completed with token:', e.detail);
-          });
-          
-          window.addEventListener('captcha-error', function() {
-            console.log('Captcha error occurred');
-          });
-        `
-      }} />
     </div>
   );
 };
