@@ -150,11 +150,10 @@ const ContactSection = () => {
     <section 
       id="contact" 
       ref={contactAnimation.elementRef}
-      className={`py-24 px-4 bg-gradient-to-br from-slate-50 to-blue-50 transition-all duration-1000 ${
+      className={`py-24 px-4 bg-white transition-all duration-1000 ${
         contactAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       }`}
     >
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=1920&h=1080&fit=crop&auto=format&q=80')] opacity-5 bg-cover bg-center"></div>
       <div className="container mx-auto max-w-5xl relative">
         <div className={`text-center mb-20 transition-all duration-1000 delay-200 ${
           contactAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'

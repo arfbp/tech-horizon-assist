@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from '@/components/ui/card';
 import { Shield, Clock, CheckCircle, XCircle, Phone, AlertTriangle, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -63,7 +62,7 @@ const TermsAndConditions = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="border-b border-gray-200 bg-white/95 backdrop-blur-xl sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-4">
@@ -72,7 +71,7 @@ const TermsAndConditions = () => {
               InstallUlang
             </Link>
             <Link to="/">
-              <Button variant="outline" className="border-2 border-pintu-300 text-pintu-700 hover:bg-pintu-50">
+              <Button className="bg-gradient-to-r from-pintu-600 to-pintu-500 text-white hover:from-pintu-700 hover:to-pintu-600 rounded-xl px-6 py-2 shadow-lg hover:shadow-xl transition-all">
                 Kembali ke Beranda
               </Button>
             </Link>

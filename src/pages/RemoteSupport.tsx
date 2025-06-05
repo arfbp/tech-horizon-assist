@@ -58,7 +58,7 @@ const RemoteSupport = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="border-b border-gray-200 bg-white/95 backdrop-blur-xl sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-4">
@@ -156,8 +156,7 @@ const RemoteSupport = () => {
                           <div className="flex flex-col sm:flex-row gap-4">
                             <Button 
                               onClick={handleCopyId}
-                              variant="outline"
-                              className="border-2 border-pintu-300 text-pintu-700 hover:bg-pintu-50 px-6 py-3 rounded-xl"
+                              className="bg-gradient-to-r from-pintu-600 to-pintu-500 text-white hover:from-pintu-700 hover:to-pintu-600 px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all"
                             >
                               {copiedId ? (
                                 <>
@@ -203,7 +202,7 @@ const RemoteSupport = () => {
                 </Button>
               </a>
               <a href="https://wa.me/6287859114643" target="_blank" rel="noopener noreferrer">
-                <Button size="lg" className="border-2 border-pintu-300 text-pintu-700 hover:bg-pintu-50 px-10 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all" variant="outline">
+                <Button size="lg" className="bg-gradient-to-r from-pintu-600 to-pintu-500 text-white hover:from-pintu-700 hover:to-pintu-600 px-10 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all">
                   <Phone className="h-5 w-5 mr-2" />
                   Hubungi Teknisi
                 </Button>
