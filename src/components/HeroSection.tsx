@@ -9,7 +9,7 @@ const HeroSection = () => {
   return (
     <section 
       ref={heroAnimation.elementRef}
-      className={`py-24 px-4 text-center bg-gradient-to-br from-slate-50 to-blue-50 relative overflow-hidden transition-all duration-1000 ${
+      className={`py-24 px-4 text-center bg-white relative overflow-hidden transition-all duration-1000 ${
         heroAnimation.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       }`}
     >
@@ -29,7 +29,7 @@ const HeroSection = () => {
               <Clock className="h-5 w-5 mr-2" />
               Konsultasi Gratis
             </Button>
-            <Button variant="outline" size="lg" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })} className="border-2 border-pintu-500 text-pintu-700 hover:bg-pintu-50 text-lg px-10 py-6 rounded-xl font-semibold">
+            <Button size="lg" className="bg-gradient-to-r from-pintu-600 to-pintu-500 text-white hover:from-pintu-700 hover:to-pintu-600 text-lg px-10 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all font-semibold" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
               Lihat Layanan
             </Button>
           </div>
