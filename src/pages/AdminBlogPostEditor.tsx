@@ -33,16 +33,16 @@ function useQuill(ref: React.RefObject<HTMLDivElement>, value: any, setValue: (v
           }
         });
         
-        // Apply custom styling for better readability
-        const editor = ref.current.querySelector('.ql-editor');
+        // Apply custom styling for black and white theme
+        const editor = ref.current.querySelector('.ql-editor') as HTMLElement;
         if (editor) {
-          editor.style.backgroundColor = '#fefefe';
-          editor.style.color = '#374151';
+          editor.style.backgroundColor = '#ffffff';
+          editor.style.color = '#000000';
           editor.style.fontSize = '16px';
           editor.style.lineHeight = '1.6';
           editor.style.fontFamily = 'system-ui, -apple-system, sans-serif';
           editor.style.padding = '16px';
-          editor.style.border = '1px solid #e5e7eb';
+          editor.style.border = '1px solid #000000';
           editor.style.borderRadius = '8px';
           editor.style.minHeight = '200px';
         }
@@ -60,31 +60,37 @@ function useQuill(ref: React.RefObject<HTMLDivElement>, value: any, setValue: (v
       script.onload = initQuill;
       document.body.appendChild(script);
       
-      // Add custom CSS for better readability
+      // Add custom CSS for black and white theme
       const style = document.createElement("style");
       style.textContent = `
         .ql-toolbar {
-          background-color: #f9fafb !important;
-          border: 1px solid #e5e7eb !important;
+          background-color: #ffffff !important;
+          border: 1px solid #000000 !important;
           border-radius: 8px 8px 0 0 !important;
         }
         .ql-container {
-          border: 1px solid #e5e7eb !important;
+          border: 1px solid #000000 !important;
           border-top: none !important;
           border-radius: 0 0 8px 8px !important;
         }
         .ql-editor {
           font-size: 16px !important;
           line-height: 1.6 !important;
-          color: #374151 !important;
-          background-color: #fefefe !important;
+          color: #000000 !important;
+          background-color: #ffffff !important;
         }
         .ql-editor h1, .ql-editor h2 {
-          color: #1f2937 !important;
+          color: #000000 !important;
           margin: 16px 0 8px 0 !important;
         }
         .ql-editor p {
           margin: 8px 0 !important;
+        }
+        .ql-toolbar .ql-stroke {
+          stroke: #000000 !important;
+        }
+        .ql-toolbar .ql-fill {
+          fill: #000000 !important;
         }
       `;
       document.head.appendChild(style);
@@ -207,36 +213,36 @@ export default function AdminBlogPostEditor() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-10">
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">{isEdit ? "Edit Post" : "Tulis Postingan Baru"}</h1>
+    <div className="max-w-2xl mx-auto px-4 py-10 bg-white">
+      <h1 className="text-2xl font-bold mb-6 text-black">{isEdit ? "Edit Post" : "Tulis Postingan Baru"}</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <Label htmlFor="title" className="text-gray-700">Judul</Label>
+          <Label htmlFor="title" className="text-black">Judul</Label>
           <Input
             id="title"
             value={title}
             onChange={e => setTitle(e.target.value)}
-            className="mb-4 text-gray-700"
+            className="mb-4 text-black bg-white border-black"
             autoFocus
             required
           />
-          <label className="block text-sm font-medium text-gray-700 mb-2">Konten</label>
-          <div ref={quillRef} className="bg-white border rounded h-52 min-h-[12rem] mb-2" />
+          <label className="block text-sm font-medium text-black mb-2">Konten</label>
+          <div ref={quillRef} className="bg-white border-black border rounded h-52 min-h-[12rem] mb-2" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Gambar (opsional)</label>
+          <label className="block text-sm font-medium text-black mb-2">Gambar (opsional)</label>
           {imageUrl && (
-            <img src={imageUrl} alt="cover" className="h-40 rounded mb-3" />
+            <img src={imageUrl} alt="cover" className="h-40 rounded mb-3 border border-black" />
           )}
           <input
             type="file"
             accept="image/*"
             onChange={handleImageUpload}
-            className="text-gray-700"
+            className="text-black"
           />
         </div>
         <div className="flex items-center gap-4">
-          <label className="flex items-center text-base text-gray-700">
+          <label className="flex items-center text-base text-black">
             <input
               type="checkbox"
               checked={isPublished}
@@ -247,10 +253,10 @@ export default function AdminBlogPostEditor() {
           </label>
         </div>
         <div className="flex gap-4">
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" className="w-full bg-black text-white hover:bg-gray-800" disabled={loading}>
             {loading ? "Menyimpan..." : isEdit ? "Update" : "Publish"}
           </Button>
-          <Button type="button" variant="secondary" className="w-full" onClick={() => navigate("/admin-blog")}>
+          <Button type="button" variant="secondary" className="w-full bg-white text-black border-black hover:bg-gray-100" onClick={() => navigate("/admin-blog")}>
             Batal
           </Button>
         </div>

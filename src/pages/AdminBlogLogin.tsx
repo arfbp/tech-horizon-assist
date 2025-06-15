@@ -44,31 +44,32 @@ export default function AdminBlogLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <form onSubmit={handleLogin} className="bg-white p-8 rounded-xl shadow-md w-full max-w-md space-y-6">
-        <h1 className="text-2xl font-bold mb-2 text-gray-800 text-center">Login Admin Blog</h1>
+    <div className="min-h-screen flex items-center justify-center bg-white px-4">
+      <form onSubmit={handleLogin} className="bg-white p-8 rounded-xl shadow-md border-2 border-black w-full max-w-md space-y-6">
+        <h1 className="text-2xl font-bold mb-2 text-black text-center">Login Admin Blog</h1>
         <div>
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email" className="text-black">Email</Label>
           <Input
             id="email"
             type="email"
             value={email}
             disabled
             autoComplete="username"
-            className="bg-gray-100"
+            className="bg-gray-100 text-black border-black"
           />
         </div>
         <div>
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password" className="text-black">Password</Label>
           <Input
             id="password"
             type="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
             autoComplete="current-password"
+            className="text-black border-black bg-white"
           />
         </div>
-        <Button type="submit" className="w-full" disabled={loading}>
+        <Button type="submit" className="w-full bg-black text-white hover:bg-gray-800" disabled={loading}>
           {loading ? "Loading..." : "Login"}
         </Button>
       </form>

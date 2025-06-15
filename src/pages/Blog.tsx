@@ -29,31 +29,31 @@ export default function Blog() {
   });
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-10">
-      <h1 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">Blog</h1>
-      {isLoading && <div>Loading...</div>}
+    <div className="max-w-2xl mx-auto px-4 py-10 bg-white min-h-screen">
+      <h1 className="text-3xl md:text-4xl font-bold mb-6 text-black">Blog</h1>
+      {isLoading && <div className="text-black">Loading...</div>}
       {error && <div className="text-red-600">Error loading posts.</div>}
       <div className="space-y-6">
         {posts &&
           posts.map((post) => (
-            <Card key={post.id} className="p-4 hover:shadow-md transition-all rounded-lg">
+            <Card key={post.id} className="p-4 hover:shadow-md transition-all rounded-lg bg-white border-black border-2">
               <Link to={`/blog/${post.id}`}>
                 {post.image_url && (
                   <img
                     src={post.image_url}
                     alt={post.title}
-                    className="w-full h-48 object-cover mb-2 rounded"
+                    className="w-full h-48 object-cover mb-2 rounded border border-black"
                   />
                 )}
-                <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
-                <p className="text-sm text-gray-500">
+                <h2 className="text-xl font-semibold mb-2 text-black">{post.title}</h2>
+                <p className="text-sm text-gray-600">
                   {new Date(post.created_at).toLocaleDateString()}
                 </p>
               </Link>
             </Card>
           ))}
         {!isLoading && (!posts || posts.length === 0) && (
-          <div className="text-gray-500">Belum ada postingan.</div>
+          <div className="text-gray-600">Belum ada postingan.</div>
         )}
       </div>
     </div>

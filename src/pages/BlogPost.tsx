@@ -28,15 +28,15 @@ function renderContent(content: any) {
     try {
       content = JSON.parse(content);
     } catch {
-      return <div className="prose prose-lg max-w-none leading-relaxed text-gray-700">{content}</div>;
+      return <div className="prose prose-lg max-w-none leading-relaxed text-black">{content}</div>;
     }
   }
   if (!content?.ops) return <div />;
   return (
-    <div className="prose prose-lg max-w-none leading-relaxed text-gray-700">
+    <div className="prose prose-lg max-w-none leading-relaxed text-black">
       {content.ops.map((op: any, i: number) => {
         if (typeof op.insert === "string") {
-          return <span key={i} className="text-gray-700 leading-relaxed">{op.insert}</span>;
+          return <span key={i} className="text-black leading-relaxed">{op.insert}</span>;
         }
         return null;
       })}
@@ -52,19 +52,19 @@ export default function BlogPost() {
     enabled: !!id,
   });
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error || !post) return <div className="text-red-600">Not found!</div>;
+  if (isLoading) return <div className="bg-white min-h-screen p-4 text-black">Loading...</div>;
+  if (error || !post) return <div className="text-red-600 bg-white min-h-screen p-4">Not found!</div>;
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-10">
+    <div className="max-w-2xl mx-auto px-4 py-10 bg-white min-h-screen">
       <Link to="/blog" className="text-blue-600 hover:text-blue-800 underline mb-4 block">
         &larr; Kembali ke Blog
       </Link>
       {post.image_url && (
-        <img src={post.image_url} alt={post.title} className="w-full h-80 object-cover mb-6 rounded" />
+        <img src={post.image_url} alt={post.title} className="w-full h-80 object-cover mb-6 rounded border border-black" />
       )}
-      <h1 className="text-2xl font-bold mb-2 text-gray-800">{post.title}</h1>
-      <p className="text-sm text-gray-500 mb-6">{new Date(post.created_at).toLocaleDateString()}</p>
+      <h1 className="text-2xl font-bold mb-2 text-black">{post.title}</h1>
+      <p className="text-sm text-gray-600 mb-6">{new Date(post.created_at).toLocaleDateString()}</p>
       <div>{renderContent(post.content)}</div>
     </div>
   );

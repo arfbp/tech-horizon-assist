@@ -63,32 +63,38 @@ export default function AdminBlog() {
   }, []);
 
   if (isAdmin === null) {
-    return <div className="h-screen flex justify-center items-center">Checking access...</div>;
+    return <div className="h-screen flex justify-center items-center bg-white text-black">Checking access...</div>;
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="max-w-3xl mx-auto px-4 py-8 bg-white min-h-screen">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Blog Admin Panel</h1>
-        <Button onClick={async () => {
-          await supabase.auth.signOut();
-          navigate("/admin-blog-login");
-        }}>
+        <h1 className="text-3xl font-bold text-black">Blog Admin Panel</h1>
+        <Button 
+          onClick={async () => {
+            await supabase.auth.signOut();
+            navigate("/admin-blog-login");
+          }}
+          className="bg-black text-white hover:bg-gray-800"
+        >
           Logout
         </Button>
       </div>
-      <Button className="mb-6" onClick={() => navigate("/admin-blog/new")}>
+      <Button 
+        className="mb-6 bg-black text-white hover:bg-gray-800" 
+        onClick={() => navigate("/admin-blog/new")}
+      >
         + New Post
       </Button>
       <div className="space-y-4">
-        {isLoading && <div>Memuat postingan...</div>}
-        {posts && posts.length === 0 && <div>Tidak ada postingan.</div>}
+        {isLoading && <div className="text-black">Memuat postingan...</div>}
+        {posts && posts.length === 0 && <div className="text-black">Tidak ada postingan.</div>}
         {posts &&
           posts.map((post) => (
-            <div key={post.id} className="border rounded-lg p-4 flex flex-col md:flex-row md:items-center md:justify-between">
+            <div key={post.id} className="border-2 border-black rounded-lg p-4 flex flex-col md:flex-row md:items-center md:justify-between bg-white">
               <div>
-                <div className="font-bold text-lg">{post.title}</div>
-                <div className="text-sm text-gray-500">
+                <div className="font-bold text-lg text-black">{post.title}</div>
+                <div className="text-sm text-gray-600">
                   {new Date(post.created_at).toLocaleDateString()}
                   {post.is_published ? (
                     <span className="ml-3 text-green-600 font-semibold">Published</span>
@@ -102,6 +108,7 @@ export default function AdminBlog() {
                   variant="secondary"
                   size="sm"
                   onClick={() => navigate(`/admin-blog/edit/${post.id}`)}
+                  className="bg-white text-black border-black hover:bg-gray-100"
                 >
                   Edit
                 </Button>
@@ -121,6 +128,7 @@ export default function AdminBlog() {
                       refetch();
                     }
                   }}
+                  className="bg-red-600 text-white hover:bg-red-700"
                 >
                   Delete
                 </Button>
