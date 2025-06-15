@@ -25,7 +25,7 @@ type AdminBlogPost = {
 
 const fetchPosts = async (): Promise<AdminBlogPost[]> => {
   const { data, error } = await supabase
-    .from("blog_posts" as any)
+    .from("blog_posts")
     .select("id,title,is_published,created_at")
     .order("created_at", { ascending: false });
   if (error) throw error;
@@ -111,7 +111,7 @@ export default function AdminBlog() {
                   onClick={async () => {
                     if (!window.confirm("Hapus postingan ini?")) return;
                     const { error } = await supabase
-                      .from("blog_posts" as any)
+                      .from("blog_posts")
                       .delete()
                       .eq("id", post.id);
                     if (error) {

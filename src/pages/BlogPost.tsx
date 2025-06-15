@@ -14,7 +14,7 @@ type BlogPost = {
 
 const fetchPost = async (id: string): Promise<BlogPost | null> => {
   const { data, error } = await supabase
-    .from("blog_posts" as any)
+    .from("blog_posts")
     .select("id,title,content,image_url,created_at")
     .eq("id", id)
     .eq("is_published", true)
@@ -28,15 +28,15 @@ function renderContent(content: any) {
     try {
       content = JSON.parse(content);
     } catch {
-      return <div>{content}</div>;
+      return <div className="prose prose-lg max-w-none leading-relaxed text-gray-700">{content}</div>;
     }
   }
   if (!content?.ops) return <div />;
   return (
-    <div className="prose prose-neutral max-w-none">
+    <div className="prose prose-lg max-w-none leading-relaxed text-gray-700">
       {content.ops.map((op: any, i: number) => {
         if (typeof op.insert === "string") {
-          return <span key={i}>{op.insert}</span>;
+          return <span key={i} className="text-gray-700 leading-relaxed">{op.insert}</span>;
         }
         return null;
       })}
@@ -57,13 +57,13 @@ export default function BlogPost() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
-      <Link to="/blog" className="text-pintu-600 underline mb-4 block">
+      <Link to="/blog" className="text-blue-600 hover:text-blue-800 underline mb-4 block">
         &larr; Kembali ke Blog
       </Link>
       {post.image_url && (
         <img src={post.image_url} alt={post.title} className="w-full h-80 object-cover mb-6 rounded" />
       )}
-      <h1 className="text-2xl font-bold mb-2">{post.title}</h1>
+      <h1 className="text-2xl font-bold mb-2 text-gray-800">{post.title}</h1>
       <p className="text-sm text-gray-500 mb-6">{new Date(post.created_at).toLocaleDateString()}</p>
       <div>{renderContent(post.content)}</div>
     </div>

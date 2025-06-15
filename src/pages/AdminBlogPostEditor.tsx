@@ -18,28 +18,77 @@ function useQuill(ref: React.RefObject<HTMLDivElement>, value: any, setValue: (v
   useEffect(() => {
     let quill: any;
     let loaded = false;
+    
     const initQuill = () => {
       if (ref.current && window.Quill && !loaded) {
         loaded = true;
         quill = new window.Quill(ref.current, {
           theme: "snow",
-          modules: { toolbar: [
-            [{ header: [1, 2, false] }],
-            ["bold", "italic", "underline"],
-            ["link", "image"],
-          ] }
+          modules: { 
+            toolbar: [
+              [{ header: [1, 2, false] }],
+              ["bold", "italic", "underline"],
+              ["link", "image"],
+            ] 
+          }
         });
+        
+        // Apply custom styling for better readability
+        const editor = ref.current.querySelector('.ql-editor');
+        if (editor) {
+          editor.style.backgroundColor = '#fefefe';
+          editor.style.color = '#374151';
+          editor.style.fontSize = '16px';
+          editor.style.lineHeight = '1.6';
+          editor.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+          editor.style.padding = '16px';
+          editor.style.border = '1px solid #e5e7eb';
+          editor.style.borderRadius = '8px';
+          editor.style.minHeight = '200px';
+        }
+        
         if (value) quill.setContents(value);
         quill.on("text-change", () => {
           setValue(quill.getContents());
         });
       }
     };
+    
     if (!window.Quill) {
       const script = document.createElement("script");
       script.src = "https://cdn.quilljs.com/1.3.7/quill.js";
       script.onload = initQuill;
       document.body.appendChild(script);
+      
+      // Add custom CSS for better readability
+      const style = document.createElement("style");
+      style.textContent = `
+        .ql-toolbar {
+          background-color: #f9fafb !important;
+          border: 1px solid #e5e7eb !important;
+          border-radius: 8px 8px 0 0 !important;
+        }
+        .ql-container {
+          border: 1px solid #e5e7eb !important;
+          border-top: none !important;
+          border-radius: 0 0 8px 8px !important;
+        }
+        .ql-editor {
+          font-size: 16px !important;
+          line-height: 1.6 !important;
+          color: #374151 !important;
+          background-color: #fefefe !important;
+        }
+        .ql-editor h1, .ql-editor h2 {
+          color: #1f2937 !important;
+          margin: 16px 0 8px 0 !important;
+        }
+        .ql-editor p {
+          margin: 8px 0 !important;
+        }
+      `;
+      document.head.appendChild(style);
+      
       document.head.insertAdjacentHTML(
         "beforeend",
         `<link rel="stylesheet" href="https://cdn.quilljs.com/1.3.7/quill.snow.css" />`
@@ -62,16 +111,6 @@ type BlogPostForm = {
   is_published: boolean;
 };
 
-type SupabaseBlogPost = {
-  id: string;
-  title: string;
-  content: any;
-  image_url: string;
-  is_published: boolean;
-  created_at: string;
-  updated_at: string;
-};
-
 export default function AdminBlogPostEditor() {
   const { id } = useParams();
   const isEdit = Boolean(id);
@@ -88,7 +127,7 @@ export default function AdminBlogPostEditor() {
   useEffect(() => {
     if (isEdit) {
       supabase
-        .from("blog_posts" as any)
+        .from("blog_posts")
         .select("*")
         .eq("id", id)
         .maybeSingle()
@@ -144,7 +183,7 @@ export default function AdminBlogPostEditor() {
 
     if (isEdit) {
       const { error } = await supabase
-        .from("blog_posts" as any)
+        .from("blog_posts")
         .update(data)
         .eq("id", id);
       if (error) {
@@ -155,7 +194,7 @@ export default function AdminBlogPostEditor() {
       }
     } else {
       const { error } = await supabase
-        .from("blog_posts" as any)
+        .from("blog_posts")
         .insert([data]);
       if (error) {
         toast({ title: "Gagal membuat postingan", description: error.message });
@@ -169,15 +208,15 @@ export default function AdminBlogPostEditor() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
-      <h1 className="text-2xl font-bold mb-6">{isEdit ? "Edit Post" : "Tulis Postingan Baru"}</h1>
+      <h1 className="text-2xl font-bold mb-6 text-gray-800">{isEdit ? "Edit Post" : "Tulis Postingan Baru"}</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <Label htmlFor="title">Judul</Label>
+          <Label htmlFor="title" className="text-gray-700">Judul</Label>
           <Input
             id="title"
             value={title}
             onChange={e => setTitle(e.target.value)}
-            className="mb-4"
+            className="mb-4 text-gray-700"
             autoFocus
             required
           />
@@ -193,10 +232,11 @@ export default function AdminBlogPostEditor() {
             type="file"
             accept="image/*"
             onChange={handleImageUpload}
+            className="text-gray-700"
           />
         </div>
         <div className="flex items-center gap-4">
-          <label className="flex items-center text-base">
+          <label className="flex items-center text-base text-gray-700">
             <input
               type="checkbox"
               checked={isPublished}
@@ -218,4 +258,3 @@ export default function AdminBlogPostEditor() {
     </div>
   );
 }
-// File is getting long. After this, consider splitting logic/UI out to smaller files!

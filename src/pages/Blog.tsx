@@ -14,7 +14,7 @@ type BlogPost = {
 
 const fetchPosts = async (): Promise<BlogPost[]> => {
   const { data, error } = await supabase
-    .from("blog_posts" as any)
+    .from("blog_posts")
     .select("id, title, image_url, created_at")
     .eq("is_published", true)
     .order("created_at", { ascending: false });
