@@ -5,15 +5,21 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 
-// Helper to fetch published posts
-const fetchPosts = async () => {
+type BlogPost = {
+  id: string;
+  title: string;
+  image_url?: string | null;
+  created_at: string;
+};
+
+const fetchPosts = async (): Promise<BlogPost[]> => {
   const { data, error } = await supabase
-    .from("blog_posts")
+    .from("blog_posts" as any)
     .select("id, title, image_url, created_at")
     .eq("is_published", true)
     .order("created_at", { ascending: false });
   if (error) throw error;
-  return data;
+  return data || [];
 };
 
 export default function Blog() {
@@ -29,7 +35,7 @@ export default function Blog() {
       {error && <div className="text-red-600">Error loading posts.</div>}
       <div className="space-y-6">
         {posts &&
-          posts.map((post: any) => (
+          posts.map((post) => (
             <Card key={post.id} className="p-4 hover:shadow-md transition-all rounded-lg">
               <Link to={`/blog/${post.id}`}>
                 {post.image_url && (

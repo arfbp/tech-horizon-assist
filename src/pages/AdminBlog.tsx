@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/use-toast";
 
@@ -10,23 +10,26 @@ import { toast } from "@/components/ui/use-toast";
 async function checkAdmin() {
   const { data, error } = await supabase.auth.getUser();
   const user = data?.user;
-  if (
-    !user ||
-    !user.email ||
-    user.email !== "bparif21@gmail.com"
-  ) {
+  if (!user || !user.email || user.email !== "bparif21@gmail.com") {
     return false;
   }
   return true;
 }
 
-const fetchPosts = async () => {
+type AdminBlogPost = {
+  id: string;
+  title: string;
+  is_published: boolean;
+  created_at: string;
+};
+
+const fetchPosts = async (): Promise<AdminBlogPost[]> => {
   const { data, error } = await supabase
-    .from("blog_posts")
+    .from("blog_posts" as any)
     .select("id,title,is_published,created_at")
     .order("created_at", { ascending: false });
   if (error) throw error;
-  return data;
+  return data || [];
 };
 
 export default function AdminBlog() {
@@ -45,12 +48,10 @@ export default function AdminBlog() {
         navigate("/admin-blog-login");
       }
     });
-    // Clean up: optional
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    // Listen to session and redirect if not admin
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_evt, session) => {
       if (!session) {
         setIsAdmin(false);
@@ -83,7 +84,7 @@ export default function AdminBlog() {
         {isLoading && <div>Memuat postingan...</div>}
         {posts && posts.length === 0 && <div>Tidak ada postingan.</div>}
         {posts &&
-          posts.map((post: any) => (
+          posts.map((post) => (
             <div key={post.id} className="border rounded-lg p-4 flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
                 <div className="font-bold text-lg">{post.title}</div>
@@ -110,7 +111,7 @@ export default function AdminBlog() {
                   onClick={async () => {
                     if (!window.confirm("Hapus postingan ini?")) return;
                     const { error } = await supabase
-                      .from("blog_posts")
+                      .from("blog_posts" as any)
                       .delete()
                       .eq("id", post.id);
                     if (error) {

@@ -5,9 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/use-toast";
+import { Label } from "@/components/ui/label";
 
 export default function AdminBlogLogin() {
-  const [email, setEmail] = useState("bparif21@gmail.com");
+  const [email] = useState("bparif21@gmail.com");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -16,7 +17,6 @@ export default function AdminBlogLogin() {
     e.preventDefault();
     setLoading(true);
 
-    // Only allow hardcoded email
     if (email !== "bparif21@gmail.com") {
       toast({
         title: "Login gagal",
@@ -47,21 +47,27 @@ export default function AdminBlogLogin() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <form onSubmit={handleLogin} className="bg-white p-8 rounded-xl shadow-md w-full max-w-md space-y-6">
         <h1 className="text-2xl font-bold mb-2 text-gray-800 text-center">Login Admin Blog</h1>
-        <Input
-          label="Email"
-          type="email"
-          value={email}
-          disabled
-          autoComplete="username"
-          className="bg-gray-100"
-        />
-        <Input
-          label="Password"
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          autoComplete="current-password"
-        />
+        <div>
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            type="email"
+            value={email}
+            disabled
+            autoComplete="username"
+            className="bg-gray-100"
+          />
+        </div>
+        <div>
+          <Label htmlFor="password">Password</Label>
+          <Input
+            id="password"
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            autoComplete="current-password"
+          />
+        </div>
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? "Loading..." : "Login"}
         </Button>

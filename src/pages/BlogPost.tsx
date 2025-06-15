@@ -4,18 +4,25 @@ import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-const fetchPost = async (id: string) => {
+type BlogPost = {
+  id: string;
+  title: string;
+  content: any;
+  image_url?: string | null;
+  created_at: string;
+};
+
+const fetchPost = async (id: string): Promise<BlogPost | null> => {
   const { data, error } = await supabase
-    .from("blog_posts")
+    .from("blog_posts" as any)
     .select("id,title,content,image_url,created_at")
     .eq("id", id)
     .eq("is_published", true)
-    .single();
+    .maybeSingle();
   if (error) throw error;
   return data;
 };
 
-// render rich text from JSON to HTML (simple for MVP)
 function renderContent(content: any) {
   if (typeof content === "string") {
     try {
@@ -25,7 +32,6 @@ function renderContent(content: any) {
     }
   }
   if (!content?.ops) return <div />;
-  // Just a rudimentary rendering
   return (
     <div className="prose prose-neutral max-w-none">
       {content.ops.map((op: any, i: number) => {

@@ -4,11 +4,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/components/ui/use-toast";
+import { Label } from "@/components/ui/label";
 
-// Basic Rich Text Editor using Quill CDN (for speed, not production secure!)
+// Basic Rich Text Editor using Quill CDN (for MVP, not for production!)
 // We'll use unpkg to load Quill
 declare global {
   interface Window { Quill: any; }
@@ -35,7 +35,6 @@ function useQuill(ref: React.RefObject<HTMLDivElement>, value: any, setValue: (v
         });
       }
     };
-    // If not loaded, load Quill via CDN
     if (!window.Quill) {
       const script = document.createElement("script");
       script.src = "https://cdn.quilljs.com/1.3.7/quill.js";
@@ -48,22 +47,36 @@ function useQuill(ref: React.RefObject<HTMLDivElement>, value: any, setValue: (v
     } else {
       initQuill();
     }
-    // Cleanup
     return () => {
       if (quill && ref.current) {
         ref.current.innerHTML = "";
       }
     };
-    // eslint-disable-next-line
   }, []);
 }
+
+type BlogPostForm = {
+  title: string;
+  content: any;
+  image_url: string;
+  is_published: boolean;
+};
+
+type SupabaseBlogPost = {
+  id: string;
+  title: string;
+  content: any;
+  image_url: string;
+  is_published: boolean;
+  created_at: string;
+  updated_at: string;
+};
 
 export default function AdminBlogPostEditor() {
   const { id } = useParams();
   const isEdit = Boolean(id);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState<any>({ ops: [{ insert: "\n" }] });
-  const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [isPublished, setIsPublished] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -72,14 +85,13 @@ export default function AdminBlogPostEditor() {
 
   useQuill(quillRef, content, setContent);
 
-  // Fetch old post when editing
   useEffect(() => {
     if (isEdit) {
       supabase
-        .from("blog_posts")
+        .from("blog_posts" as any)
         .select("*")
         .eq("id", id)
-        .single()
+        .maybeSingle()
         .then(({ data, error }) => {
           if (data) {
             setTitle(data.title);
@@ -89,7 +101,6 @@ export default function AdminBlogPostEditor() {
           }
         });
     }
-    // eslint-disable-next-line
   }, [isEdit, id]);
 
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -103,7 +114,12 @@ export default function AdminBlogPostEditor() {
     if (error) {
       toast({ title: "Upload gagal", description: error.message });
     } else {
-      const url = `${supabase.storageUrl}/object/public/blog-images/${newFileName}`;
+      // get public URL for the uploaded image
+      const { data: urlData } = supabase
+        .storage
+        .from("blog-images")
+        .getPublicUrl(newFileName);
+      const url = urlData?.publicUrl || "";
       setImageUrl(url);
       toast({ title: "Gambar berhasil di-upload." });
     }
@@ -119,7 +135,7 @@ export default function AdminBlogPostEditor() {
       return;
     }
 
-    const data = {
+    const data: BlogPostForm = {
       title,
       content: typeof content === "string" ? content : JSON.stringify(content),
       image_url: imageUrl,
@@ -127,9 +143,8 @@ export default function AdminBlogPostEditor() {
     };
 
     if (isEdit) {
-      // update
       const { error } = await supabase
-        .from("blog_posts")
+        .from("blog_posts" as any)
         .update(data)
         .eq("id", id);
       if (error) {
@@ -139,9 +154,8 @@ export default function AdminBlogPostEditor() {
         navigate("/admin-blog");
       }
     } else {
-      // insert
       const { error } = await supabase
-        .from("blog_posts")
+        .from("blog_posts" as any)
         .insert([data]);
       if (error) {
         toast({ title: "Gagal membuat postingan", description: error.message });
@@ -158,8 +172,9 @@ export default function AdminBlogPostEditor() {
       <h1 className="text-2xl font-bold mb-6">{isEdit ? "Edit Post" : "Tulis Postingan Baru"}</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
+          <Label htmlFor="title">Judul</Label>
           <Input
-            label="Judul"
+            id="title"
             value={title}
             onChange={e => setTitle(e.target.value)}
             className="mb-4"
@@ -203,3 +218,4 @@ export default function AdminBlogPostEditor() {
     </div>
   );
 }
+// File is getting long. After this, consider splitting logic/UI out to smaller files!
